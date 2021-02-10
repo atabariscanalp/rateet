@@ -1,114 +1,113 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import { NavigationContainer } from '@react-navigation/native'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { Provider as PaperProvider } from 'react-native-paper'
+import { connect, useSelector } from 'react-redux'
+import admob, { MaxAdContentRating } from '@react-native-firebase/admob'
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import language from './src/languages/Languages'
+import { loadUser } from './src/actions/auth'
+import { changePrefferedLanguage, getUsers, registerDevice } from './src/actions/user'
+import { MainStack }  from './screens/navigation'
+import { ThemeContext, themes } from './src/constants/context'
+import { refreshToken, registerAppWithFCM, unSubscribeRefreshToken, checkPermission, messageListener } from './src/notifications/FCM'
+import { getIsAuthenticatedInfo, getIsDarkThemeInfo, getPreferredLanguageInfo } from './src/constants/selector'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Platform } from 'react-native'
+import { notificationLinking } from './src/notifications/DeepLinking'
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
+const App = ({ loadUser, getUsers, registerDevice, changePrefferedLanguage }) => {
+
+  const isDark = useSelector(getIsDarkThemeInfo)
+  const isAuthenticated = useSelector(getIsAuthenticatedInfo)
+  const prefferedLanguage = useSelector(getPreferredLanguageInfo)
+
+  const [isDarkTheme, setIsDarkTheme] = useState(isDark)
+
+  const toggleTheme = useCallback(() => {
+    return setIsDarkTheme(!isDarkTheme)
+  }, [isDarkTheme])
+
+  const themeContext = useMemo(() => ({
+    toggleTheme,
+    isDarkTheme
+  }), [toggleTheme,isDarkTheme])
+
+  const admobConf = () => {
+    admob()
+    .setRequestConfiguration({
+      // Update all future requests suitable for parental guidance
+      maxAdContentRating: MaxAdContentRating.PG,
+
+      // Indicates that you want your content treated as child-directed for purposes of COPPA.
+      tagForChildDirectedTreatment: true,
+
+      // Indicates that you want the ad request to be handled in a
+      // manner suitable for users under the age of consent.
+      tagForUnderAgeOfConsent: true,
+    })
+    .then(() => {
+      // Request config successfully set!
+    })
+  }
+  
+
+
+  const chooseLanguage = useCallback(() => {
+      const lng = language.getInterfaceLanguage().substring(0,2)
+
+      let moment = require('moment')
+      require('moment/locale/tr')
+      require('moment/locale/en-gb')
+      
+      if (lng === 'tr')
+      {
+        moment.locale('tr')
+        if (prefferedLanguage === 'en')
+          changePrefferedLanguage('tr')
+      }
+
+      language.setLanguage(lng)
+  }, [changePrefferedLanguage, prefferedLanguage])
+
+
+  useEffect(() => {
+    chooseLanguage()
+
+    checkPermission()
+    registerAppWithFCM()
+    admobConf()
+    refreshToken()
+      
+    loadUser()
+    getUsers()
+
+    if (isAuthenticated) {
+      AsyncStorage.getItem('fcm_token').then(token => {
+        if (token)
+          registerDevice(token, Platform.OS)
+        else 
+          console.log("no token: ", token)
+      })
+    }
+
+    return () => {
+      messageListener()
+      unSubscribeRefreshToken()
+    }
+  }, [chooseLanguage, getUsers, isAuthenticated, loadUser, registerDevice])
+
+
+
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+    <ThemeContext.Provider value={themeContext}>
+      <PaperProvider theme={isDarkTheme ? themes.dark : themes.light}>
+        <NavigationContainer theme={isDarkTheme ? themes.dark : themes.light} linking={notificationLinking}>
+          <MainStack />
+        </NavigationContainer>
+      </PaperProvider>
+    </ThemeContext.Provider>
+  )
+}
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
-
-export default App;
+export default connect(null, { loadUser, getUsers, registerDevice, changePrefferedLanguage })(App)

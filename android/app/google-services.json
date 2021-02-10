@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "884209790180",
+    "project_id": "rateet-44cbf",
+    "storage_bucket": "rateet-44cbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884209790180:android:cb17aba08f54d4a5a450f1",
+        "android_client_info": {
+          "package_name": "com.rateet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884209790180-oe99meqpt8g1h94qqv0thprq76731c4c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rateet",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "884209790180-q201rsd02o3sf35a34g0ssou54ogoj4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANDkpbdZbssJH5EYoA4l47mE5t87qVG1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884209790180-q201rsd02o3sf35a34g0ssou54ogoj4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
