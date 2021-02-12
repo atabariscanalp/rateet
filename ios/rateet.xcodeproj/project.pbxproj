@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* rateetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rateetTests.m */; };
+		05F747E399BC4F59907752C9 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38125D00B9C24497944CEE46 /* OpenSans-ExtraBoldItalic.ttf */; };
+		0E0655A727A74C77B28A19D1 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0482F8EBBC264B01A4E18AC8 /* OpenSans-SemiBold.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -16,17 +18,19 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* rateetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rateetTests.m */; };
 		4BFB828D190AB196D83177AE /* libPods-rateet-rateetTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC78279E375279014AD41B47 /* libPods-rateet-rateetTests.a */; };
-		52895A6825D43326004EBCF9 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52895A6225D43326004EBCF9 /* MaterialIcons.ttf */; };
-		52895A6925D43326004EBCF9 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52895A6325D43326004EBCF9 /* Ionicons.ttf */; };
-		52895A6A25D43326004EBCF9 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52895A6425D43326004EBCF9 /* AntDesign.ttf */; };
-		52895A6B25D43326004EBCF9 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52895A6525D43326004EBCF9 /* Feather.ttf */; };
-		52895A6C25D43326004EBCF9 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52895A6625D43326004EBCF9 /* Entypo.ttf */; };
-		52895A6D25D43326004EBCF9 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52895A6725D43326004EBCF9 /* MaterialCommunityIcons.ttf */; };
 		52895B2425D4419D004EBCF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52895B2325D4419D004EBCF9 /* GoogleService-Info.plist */; };
+		6F5AAF465DF04525B994FC56 /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 859F61C344014D77AC7CB6C1 /* OpenSans-ExtraBold.ttf */; };
 		7DF38CFC17C3E031C6B65A50 /* libPods-rateet-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F063D2EB4AF850D727852516 /* libPods-rateet-tvOSTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9A7C18B430244FB6AEE75A98 /* OpenSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 834701DCF0F64DDC88D1DA1A /* OpenSans-SemiBoldItalic.ttf */; };
 		A55F7226886739E665BE31B1 /* libPods-rateet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59073B54F0CE3ABC435BF353 /* libPods-rateet.a */; };
+		AFE5D9C21ACB4AB7A54FC43E /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8601D2BDE9914E0EA5AE24D8 /* OpenSans-Italic.ttf */; };
+		BA2036017443473DBC17A3CF /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35EFAB4D6971440FA2028F3D /* OpenSans-BoldItalic.ttf */; };
+		BBE5D0B6AA6C4790B47DE5D5 /* OpenSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D8DCFFE860644D195D050B9 /* OpenSans-LightItalic.ttf */; };
+		DDCC739A15614350B6568B46 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EBE2F0E889EE4728B1F79503 /* OpenSans-Regular.ttf */; };
+		EA423CD688D348DDA65FC0CC /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790AF71652914634A026BEC7 /* OpenSans-Light.ttf */; };
 		FB915CAF9243F8F023A5B3CF /* libPods-rateet-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD4F977F73E69FBAD5F0DE /* libPods-rateet-tvOS.a */; };
+		FC07072FE5E04870ADEAD407 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 959073E1D46A49ECBE94054C /* OpenSans-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,21 +51,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0030B58A91D5488BB7D11079 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* rateetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rateetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* rateetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rateetTests.m; sourceTree = "<group>"; };
 		0149AD6FCA1BF99B50E1B4D4 /* Pods-rateet-rateetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rateet-rateetTests.debug.xcconfig"; path = "Target Support Files/Pods-rateet-rateetTests/Pods-rateet-rateetTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0482F8EBBC264B01A4E18AC8 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-SemiBold.ttf"; path = "../assets/Fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* rateet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rateet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = rateet/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = rateet/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = rateet/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = rateet/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = rateet/main.m; sourceTree = "<group>"; };
+		17E9E9BAABA2442A98131357 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		1B81656DE34C695FA580AF9B /* Pods-rateet-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rateet-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-rateet-tvOSTests/Pods-rateet-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		242A9CCF5ABE4F3D88FE2F23 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		2A4066FB634DC7B792EEDD32 /* Pods-rateet-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rateet-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-rateet-tvOS/Pods-rateet-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		2C00959811AA4B67AC8CFD54 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* rateet-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "rateet-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* rateet-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "rateet-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EF894AD440E4911A0268B71 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		35EFAB4D6971440FA2028F3D /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-BoldItalic.ttf"; path = "../assets/Fonts/OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
+		38125D00B9C24497944CEE46 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-ExtraBoldItalic.ttf"; path = "../assets/Fonts/OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		3DF63DC2F58D4A7CAAC77B8C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		44B37AACD78C430EB295FC68 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		5050A10D27197310B80D37D3 /* Pods-rateet-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rateet-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-rateet-tvOSTests/Pods-rateet-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		52895A6225D43326004EBCF9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = Fonts/MaterialIcons.ttf; sourceTree = "<group>"; };
 		52895A6325D43326004EBCF9 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = Fonts/Ionicons.ttf; sourceTree = "<group>"; };
@@ -74,13 +88,29 @@
 		583A186EBC135D83E673D650 /* Pods-rateet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rateet.release.xcconfig"; path = "Target Support Files/Pods-rateet/Pods-rateet.release.xcconfig"; sourceTree = "<group>"; };
 		59073B54F0CE3ABC435BF353 /* libPods-rateet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rateet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BE02C9C580177EE97997649 /* Pods-rateet-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rateet-tvOS.release.xcconfig"; path = "Target Support Files/Pods-rateet-tvOS/Pods-rateet-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		790AF71652914634A026BEC7 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Light.ttf"; path = "../assets/Fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		79C04296D3E283E8FFD6CEEA /* Pods-rateet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rateet.debug.xcconfig"; path = "Target Support Files/Pods-rateet/Pods-rateet.debug.xcconfig"; sourceTree = "<group>"; };
+		79EE5FB592B94DDE95B51D82 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = rateet/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		834701DCF0F64DDC88D1DA1A /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-SemiBoldItalic.ttf"; path = "../assets/Fonts/OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		859F61C344014D77AC7CB6C1 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-ExtraBold.ttf"; path = "../assets/Fonts/OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		8601D2BDE9914E0EA5AE24D8 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Italic.ttf"; path = "../assets/Fonts/OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		959073E1D46A49ECBE94054C /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Bold.ttf"; path = "../assets/Fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		96C570ED5E884ED89C4D21CD /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		9A55403714EA43C68311425B /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		9D8DCFFE860644D195D050B9 /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-LightItalic.ttf"; path = "../assets/Fonts/OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
+		A041BD8FE46542AE9D2443DA /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		A1FDF7317BEE076E3B6989FD /* Pods-rateet-rateetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rateet-rateetTests.release.xcconfig"; path = "Target Support Files/Pods-rateet-rateetTests/Pods-rateet-rateetTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC78279E375279014AD41B47 /* libPods-rateet-rateetTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rateet-rateetTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3C18A4CA32B4CD2ADF1CFE7 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		BCD78A365070497F8D63ACF4 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		BD89176C8AD94A57B5EBDF2C /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		CEBD4F977F73E69FBAD5F0DE /* libPods-rateet-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rateet-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2E96342EA784BA9A7E41CF8 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		EBE2F0E889EE4728B1F79503 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Regular.ttf"; path = "../assets/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F0629AC6BDDC4750BDABADAC /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		F063D2EB4AF850D727852516 /* libPods-rateet-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rateet-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -154,6 +184,39 @@
 			name = rateet;
 			sourceTree = "<group>";
 		};
+		18892A696B004754A08AA19C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				959073E1D46A49ECBE94054C /* OpenSans-Bold.ttf */,
+				35EFAB4D6971440FA2028F3D /* OpenSans-BoldItalic.ttf */,
+				859F61C344014D77AC7CB6C1 /* OpenSans-ExtraBold.ttf */,
+				38125D00B9C24497944CEE46 /* OpenSans-ExtraBoldItalic.ttf */,
+				8601D2BDE9914E0EA5AE24D8 /* OpenSans-Italic.ttf */,
+				790AF71652914634A026BEC7 /* OpenSans-Light.ttf */,
+				9D8DCFFE860644D195D050B9 /* OpenSans-LightItalic.ttf */,
+				EBE2F0E889EE4728B1F79503 /* OpenSans-Regular.ttf */,
+				0482F8EBBC264B01A4E18AC8 /* OpenSans-SemiBold.ttf */,
+				834701DCF0F64DDC88D1DA1A /* OpenSans-SemiBoldItalic.ttf */,
+				A041BD8FE46542AE9D2443DA /* AntDesign.ttf */,
+				B3C18A4CA32B4CD2ADF1CFE7 /* Entypo.ttf */,
+				44B37AACD78C430EB295FC68 /* EvilIcons.ttf */,
+				BCD78A365070497F8D63ACF4 /* Feather.ttf */,
+				2C00959811AA4B67AC8CFD54 /* FontAwesome.ttf */,
+				E2E96342EA784BA9A7E41CF8 /* FontAwesome5_Brands.ttf */,
+				3DF63DC2F58D4A7CAAC77B8C /* FontAwesome5_Regular.ttf */,
+				BD89176C8AD94A57B5EBDF2C /* FontAwesome5_Solid.ttf */,
+				F0629AC6BDDC4750BDABADAC /* Fontisto.ttf */,
+				2EF894AD440E4911A0268B71 /* Foundation.ttf */,
+				9A55403714EA43C68311425B /* Ionicons.ttf */,
+				79EE5FB592B94DDE95B51D82 /* MaterialCommunityIcons.ttf */,
+				0030B58A91D5488BB7D11079 /* MaterialIcons.ttf */,
+				17E9E9BAABA2442A98131357 /* Octicons.ttf */,
+				242A9CCF5ABE4F3D88FE2F23 /* SimpleLineIcons.ttf */,
+				96C570ED5E884ED89C4D21CD /* Zocial.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +259,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				B25F33F423D0033D1F487943 /* Pods */,
+				18892A696B004754A08AA19C /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -239,7 +303,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				295EA749A176514FD12A4866 /* [CP] Embed Pods Frameworks */,
 				28C6879B5B9FE7551C1E62D9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -262,7 +325,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				88EDDA314EC49BC9250F49AB /* [CP] Embed Pods Frameworks */,
 				CBC9481CEE7E50923D4A09DE /* [CP] Copy Pods Resources */,
 				8D9FC49FDE753DD48DFE2D8D /* [CP-User] [RNFB] Core Configuration */,
 			);
@@ -375,14 +437,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				52895A6C25D43326004EBCF9 /* Entypo.ttf in Resources */,
 				52895B2425D4419D004EBCF9 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				52895A6B25D43326004EBCF9 /* Feather.ttf in Resources */,
-				52895A6925D43326004EBCF9 /* Ionicons.ttf in Resources */,
-				52895A6825D43326004EBCF9 /* MaterialIcons.ttf in Resources */,
-				52895A6D25D43326004EBCF9 /* MaterialCommunityIcons.ttf in Resources */,
-				52895A6A25D43326004EBCF9 /* AntDesign.ttf in Resources */,
+				FC07072FE5E04870ADEAD407 /* OpenSans-Bold.ttf in Resources */,
+				BA2036017443473DBC17A3CF /* OpenSans-BoldItalic.ttf in Resources */,
+				6F5AAF465DF04525B994FC56 /* OpenSans-ExtraBold.ttf in Resources */,
+				05F747E399BC4F59907752C9 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
+				AFE5D9C21ACB4AB7A54FC43E /* OpenSans-Italic.ttf in Resources */,
+				EA423CD688D348DDA65FC0CC /* OpenSans-Light.ttf in Resources */,
+				BBE5D0B6AA6C4790B47DE5D5 /* OpenSans-LightItalic.ttf in Resources */,
+				DDCC739A15614350B6568B46 /* OpenSans-Regular.ttf in Resources */,
+				0E0655A727A74C77B28A19D1 /* OpenSans-SemiBold.ttf in Resources */,
+				9A7C18B430244FB6AEE75A98 /* OpenSans-SemiBoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,24 +562,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rateet-rateetTests/Pods-rateet-rateetTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		295EA749A176514FD12A4866 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-rateet-rateetTests/Pods-rateet-rateetTests-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rateet-rateetTests/Pods-rateet-rateetTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -527,24 +575,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		88EDDA314EC49BC9250F49AB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-rateet/Pods-rateet-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rateet/Pods-rateet-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		8D9FC49FDE753DD48DFE2D8D /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -49,7 +49,7 @@ export function AddPostAfter({navigation, route, addPost}) {
     const navigateToHome = () => navigation.navigate('home')
     const dissmissKeyboard = () => Keyboard.dismiss()
     const onChangeText = text => setTitle(text)
-    const onValueChange = val => setCategory(val)
+    const onValueChange = (val, index) => setCategory(val)
     const getUri = () => {return {uri: image.path}}
 
     const postStyle = {opacity: category === 0 || category === null || title === null || title === "" ? 0.3 : 1, color: colors.text}
@@ -73,13 +73,13 @@ export function AddPostAfter({navigation, route, addPost}) {
             width: '65%',
             alignItems: 'center',
             justifyContent: 'center',
-            borderColor: '#cbcbcb',
+            borderColor: colors.inputBorderColor,
             backgroundColor: colors.inputBackgroundColor,
             borderRadius: 4,
             borderWidth: 1,
-            height: 35,
+            height: 38,
             position: 'absolute',
-            left: '29%',
+            left: '31%',
         }
     }
 
@@ -94,7 +94,7 @@ export function AddPostAfter({navigation, route, addPost}) {
             borderWidth: 1,
             width: '100%',
             borderRadius: 4,
-            backgroundColor: colors.background,
+            backgroundColor: colors.inputBackgroundColor,
             marginLeft: '6%'
         },
     }
@@ -263,9 +263,9 @@ const styles = StyleSheet.create({
         marginLeft: '4%'
     },
     inlineInputStyle: {
-        height: 35,
+        height: 38,
         width: '65%', 
-        marginLeft: '3%'
+        marginLeft: '6%'
     }
 })
 

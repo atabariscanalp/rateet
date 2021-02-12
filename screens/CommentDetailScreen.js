@@ -22,8 +22,8 @@ export default function CommentDetailScreen({route, navigation}) {
     //VARIABLES
     const inCommentDetailScreen = true
     const commentData = Object.values(comments)
-    const offset = Platform.OS === 'ios' ? 79 : -150 //-85 //-110
-    const behavior = Platform.OS === 'ios' ? "position" : "position"  //padding
+    const offset = Platform.OS === 'ios' ? 79 : -130 //-85 //-110
+    const behavior = Platform.OS === 'ios' ? "position" : "undefined"  //padding
     //REFS
     const ref = useRef()
     const commentRef = useRef()
@@ -93,7 +93,7 @@ export default function CommentDetailScreen({route, navigation}) {
                         <CommentForm postId={postId} commentRef={commentRef} parentId={parentId}/>
                     </SafeAreaView>
                 </SafeAreaView>
-            </KeyboardAvoidingView>
+            </KeyboardAvoidingView> 
         </SafeAreaView>
     )
 }

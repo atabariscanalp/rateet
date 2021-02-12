@@ -165,8 +165,7 @@ const RootStack = () => {
 
 const PostDetailStack = ({ route }) => {
     
-    const postId = route?.params?.params?.postId
-    console.log("postId: ", postId)
+    const postId = route?.params?.postId
     const postTitle = useSelector(state => getPostTitleInfo(state, postId))
 
     return (

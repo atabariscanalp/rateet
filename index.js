@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'
+        
 import './src/actions/interceptors'
 import { AppRegistry, Platform } from 'react-native'
 import { name as root } from './app.json'

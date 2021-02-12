@@ -86,7 +86,7 @@ export const login = (username, password) => dispatch => {
 //LOGOUT USER
 export const logout = () => dispatch => {
 
-    SInfo.deleteItem('access_token', {}).then(() => {
+    SInfo.deleteItem('access_token', {}).then(async () => {
         const config = {
             headers: {
                 "Content-type": "application/json", 
@@ -96,7 +96,9 @@ export const logout = () => dispatch => {
 
         deleteToken() //***deletes the FCM token!***
 
-        axios.get()
+        /* axios.get() */ //?
+
+        await SInfo.deleteItem('refresh_token', {}) //also delete refresh token to prevent login automatically if not logged in as another user
     
         axios.post(`${FETCH_URL}/auth/logout/`, config)
             .then(() => {

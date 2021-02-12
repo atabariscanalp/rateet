@@ -10,6 +10,8 @@ target 'rateet' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNCPicker', :path => '../node_modules/@react-native-picker/picker'
+
   target 'rateetTests' do
     inherit! :complete
     # Pods for testing
@@ -19,7 +21,7 @@ target 'rateet' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-  use_flipper!
+  use_flipper!({ 'Flipper-Folly' => '2.3.0' }) #added version for event-config.h not found error!
   post_install do |installer|
     flipper_post_install(installer)
   end
