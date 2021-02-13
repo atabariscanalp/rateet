@@ -87,10 +87,14 @@ export function posts(state = initialState, action){
                     } */
                     if (action.payload){
                         draft.posts = {}
-                        const addObj = { 'isAdd': true, 'id': Math.floor(100000 + Math.random() * 900000)}
-                        Object.values(action.payload.results).map(post => {                            
-                            if (post.id % 5 === 0)
+                        let counter = 1
+                        let addObj = { 'isAdd': true, 'id': Math.floor(100000 + Math.random() * 900000)}
+                        Object.values(action.payload.results).map(post => {       
+                            counter++                     
+                            if (counter % 5 === 0) {
                                 draft.posts[`ad-${addObj.id}`] = addObj
+                                addObj = { 'isAdd': true, 'id': Math.floor(100000 + Math.random() * 900000)}
+                            }
                             draft.posts[`p-${post.id}`] = post
                             //draft.posts = {...draft.posts, [`p-${post.id}`]: post}
                         })
@@ -121,7 +125,14 @@ export function posts(state = initialState, action){
                 case GET_POSTS_BY_CATEGORY:
                     if (action.payload){
                         draft.postsByCategory = {}
+                        let counter = 1
+                        let addObj = { 'isAdd': true, 'id': Math.floor(100000 + Math.random() * 900000)}
                         Object.values(action.payload.results).map(post => {
+                            counter++                     
+                            if (counter % 5 === 0) {
+                                draft.postsByCategory[`ad-${addObj.id}`] = addObj
+                                addObj = { 'isAdd': true, 'id': Math.floor(100000 + Math.random() * 900000)}
+                            }
                             draft.postsByCategory[`p-${post.id}`] = post
                             /* if (!draft.posts[`p-${post.id}`])
                                 draft.posts[`p-${post.id}`] = post */

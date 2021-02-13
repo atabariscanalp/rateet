@@ -11,6 +11,8 @@ import Card from '../src/components/Card'
 import FastImage from 'react-native-fast-image'
 import language from '../src/languages/Languages'
 import { ThemeContext } from '../src/constants/context'
+import Add from '../src/components/Admob'
+
 
 const PAGE_SIZE = 20
 
@@ -104,6 +106,9 @@ export class CategoryScreen extends React.Component {
     renderItem = ({ item, index }) => {
         const { navigation } = this.props
         const { colors } = this.props.route.params
+        if (item.isAdd)
+            return <Add />
+            
         return <Card post={item} navigation={navigation} colors={colors} cellRefs={this.cellRefs} />
     }
 
