@@ -43,7 +43,7 @@ export function Comment({rateComment, rateCommentUpdate, replyComment, comment, 
     const replyStyle = {fontWeight: 'bold', color: colors.replyToComment, marginRight: '4%', fontSize: responsiveScreenFontSize(1.5)}
     const avgRateStyle = {marginRight: 3, fontSize: 10, color: 'grey'}
     const usernameStyle = {fontWeight: 'bold', marginLeft: 4, color: colors.comment, marginTop: 2.5, fontSize: responsiveScreenFontSize(1.6)}
-    const replyContentStyle = {flex: 0.8, color: colors.comment, fontSize: responsiveScreenFontSize(1.6)}
+    const replyContentStyle = {flex: 0.8, color: colors.comment, fontSize: responsiveScreenFontSize(1.6), marginBottom: 2}
     const postStyle = {fontWeight: 'bold', color: colors.comment, opacity: replyText.length > 0 ? 1 : 0.3, marginLeft: '3%', fontSize: responsiveScreenFontSize(1.7)}
     const seeRepliesStyle = {fontWeight: 'bold', alignSelf: 'center', paddingTop: 3, color: colors.comment}
     const commentContent = {
@@ -51,8 +51,8 @@ export function Comment({rateComment, rateCommentUpdate, replyComment, comment, 
         minWidth: '40%',
         maxWidth: comment.author.username.length > 11 ? 127 : 160,
     }
+
     //FUNCTIONS
-            
     const onRateComment = (rate) => {
         if (!(comment.rated_by[currentUserId]))
             rateComment(rate, comment.id, postId)

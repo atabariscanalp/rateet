@@ -62,7 +62,7 @@ export function AddPostAfter({navigation, route, addPost}) {
             alignItems: 'center',                                        
         },
         inputIOS: {
-            color: 'black',
+            color: colors.text,
             width: '100%',
             textAlign: 'center'
         },

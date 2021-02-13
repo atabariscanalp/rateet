@@ -10,6 +10,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { MemoizedProfilePhoto } from './PostProfilePhoto'
 import { CustomText } from '../../shared/components'
 import languages from '../languages/Languages'
+import { responsiveScreenFontSize } from 'react-native-responsive-dimensions'
 
 export function Replies({reply, parentId, postId, rateChildComment, rateUpdateChildComment, setParentId, commentRef}) {
 
@@ -44,10 +45,10 @@ export function Replies({reply, parentId, postId, rateChildComment, rateUpdateCh
         setParentId(parentId)
     }
     //DYNAMIC STYLES
-    const authorStyle = {fontWeight: 'bold', marginLeft: 4, color: colors.comment}
-    const contentStyle = {color: colors.comment}
-    const replyStyle = {fontWeight: 'bold', color: 'grey', marginRight: 10}
-    const avgRateStyle = {marginRight: 3, fontSize: 13}
+    const authorStyle = {fontWeight: 'bold', marginLeft: 4, color: colors.comment, fontSize: responsiveScreenFontSize(1.6)}
+    const contentStyle = {color: colors.comment, fontSize: responsiveScreenFontSize(1.7)}
+    const replyStyle = {fontWeight: 'bold', color: 'grey', marginRight: 10, fontSize: responsiveScreenFontSize(1.5)}
+    const avgRateStyle = {marginRight: 3, fontSize: 13, color: 'grey'}
 
 
     useEffect(() => {
@@ -73,8 +74,8 @@ export function Replies({reply, parentId, postId, rateChildComment, rateUpdateCh
                                     rated={rate}
                                     selectedIconImage={starFilledColored}
                                     emptyIconImage={starEmptyColored}
-                                    size={12}
-                                    marginBetweenRatingIcon={0.1}
+                                    size={14}
+                                    marginBetweenRatingIcon={0.2}
                                     onIconTap={onRateComment}
                                 />
                             </SafeAreaView>
@@ -88,7 +89,7 @@ export function Replies({reply, parentId, postId, rateChildComment, rateUpdateCh
                         rated={avgRate}
                         selectedIconImage={starFilled}
                         emptyIconImage={starEmpty}
-                        size={12}
+                        size={10}
                         ratingBackgroundColor="#f2f2f2"
                         marginBetweenRatingIcon={0.1}
                         readonly={true}
