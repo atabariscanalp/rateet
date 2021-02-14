@@ -133,7 +133,7 @@ const MainStack = () => {
         }, 3000)
     }, [])
 
-    if (isLoading || !timeDone){
+    if (isLoading || timeDone){
         return (
             <Splash />
         )
