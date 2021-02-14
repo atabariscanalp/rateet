@@ -128,12 +128,15 @@ const MainStack = () => {
     const [timeDone, setTimeDone] = useState(false)
 
     useEffect(() => {        
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             setTimeDone(true)
         }, 3000)
-    }, [])
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [timeDone])
 
-    if (isLoading || timeDone){
+    if (isLoading || !timeDone){
         return (
             <Splash />
         )
