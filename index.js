@@ -16,7 +16,7 @@ import {store, persistor} from './store'
 
 // Register background handler
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-    console.log('Message handled in the background!', {...remoteMessage});
+    console.log("remote message: ", remoteMessage)
 });
 
 let isheadless = false
@@ -34,7 +34,7 @@ const NativeApp = () => {
 
     return (
         <Provider store={store}>
-            <PersistGate loading={<Splash />} persistor={persistor}>
+            <PersistGate loading={null} persistor={persistor}>
                 <App />
             </PersistGate>
         </Provider>

@@ -26,6 +26,8 @@ export default {
     passwordError3: 'Password should contain at least 1 digit.',
     passwordError4: 'Password can\'t be equal to username or email.',
     generalError: 'Please check your username, email and password again',
+    checkBoxText1: 'By checking this box you are accepting',
+    checkBoxText2: 'and',
 
     //HomeScreen
     home: 'Home', 

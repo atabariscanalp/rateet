@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react'
-import { SafeAreaView, StyleSheet, Image, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { SafeAreaView, StyleSheet, Image, TextInput, Keyboard, TouchableWithoutFeedback, Linking, Switch, Platform } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Button } from 'react-native-paper'
+import { Button, Checkbox } from 'react-native-paper'
 import { connect, useSelector } from 'react-redux'
 import { responsiveScreenFontSize } from 'react-native-responsive-dimensions'
 import axios from 'axios'
@@ -22,6 +22,7 @@ export function SignupScreen({navigation, register}) {
 
     //STATES
     const [generalError, setGeneralError] = useState('')
+    const [checked, setChecked] = useState(false)
     //username
     const [username, setUsername] = useState('')
     const [usernameError, setUsernameError] = useState('')
@@ -105,12 +106,53 @@ export function SignupScreen({navigation, register}) {
         checkPasswordError(val)
     }
 
-          
     const handleRegister = () => {
         checkIfEmailIsTaken()
         checkIfUsernameIsTaken()
-        if (!usernameError && !emailError && !passwordError) register(email, username, password)
+        if (!usernameError && !emailError && !passwordError && checked) 
+            register(email, username, password)
+        
         Keyboard.dismiss()
+    }
+
+    const goToTermsAndConditions = () => {
+        const url = 'https://rateet.com/terms-and-conditions/'
+        Linking.canOpenURL(url).then(supported => {
+            if (supported)
+                Linking.openURL(url)
+        })
+    }
+
+    const goToEULA = () => {
+        const url = 'https://rateet.com/end-user-license-agreement/'
+        Linking.canOpenURL(url).then(supported => {
+            if (supported)
+                Linking.openURL(url)
+        })
+    }
+
+    const check = () => {
+        setChecked(!checked)
+    }
+
+    const setCheckBox = () => {
+        if (Platform.OS === 'ios')
+            return (
+                <Switch
+                    value={checked}
+                    onValueChange={check}
+                    ios_backgroundColor={"grey"}
+                    style={styles.switch}
+                    trackColor={{ true: '#fb8208', false: 'grey' }}
+                />
+            ) 
+
+        return ( //TEST ON A DEVICE
+            <Checkbox 
+                status={checked ? 'checked' : 'unchecked'}
+                onPress={check}
+            />
+        )
     }
 
     useEffect(() => {
@@ -209,9 +251,15 @@ export function SignupScreen({navigation, register}) {
                     </TouchableOpacity>
                 </SafeAreaView>
                 {passwordError ? <CustomText style={styles.errorMsg}>{passwordError}</CustomText> : null}
+                <SafeAreaView style={styles.checkbox}>
+                    {setCheckBox()}
+                    <SafeAreaView style={styles.checkboxText}>
+                        <CustomText style={styles.text}>{languages.checkBoxText1} <CustomText style={styles.link} onPress={goToTermsAndConditions}>Terms and Conditions</CustomText> {languages.checkBoxText2} <CustomText style={styles.link} onPress={goToEULA}>End User License Agreement(EULA)</CustomText></CustomText>
+                    </SafeAreaView>
+                </SafeAreaView>
                 <Button
                     mode="contained"
-                    color="#fb8208" 
+                    color={checked ? "#fb8208" : '#666'} 
                     labelStyle={styles.labelStyle}
                     contentStyle={styles.contentStyle} 
                     onPress={handleRegister}
@@ -232,7 +280,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: 220,
-        height: 80,
+        height: 85,
         resizeMode: 'stretch',
         marginTop: '15%',
         marginBottom: '10%'
@@ -299,6 +347,24 @@ const styles = StyleSheet.create({
     buttonStyle: {
         width: '74%', 
         height: 50
+    },
+    link: {
+        color: '#00BFFF',
+    },
+    checkbox: {
+        flexDirection: 'row'
+    },
+    text: {
+        color: 'white'
+    },
+    checkboxText: {
+        maxWidth: '55%',
+        marginBottom: '5%',
+        fontSize: responsiveScreenFontSize(1.5)
+    },
+    switch: {
+        marginRight: '6%',
+        marginTop: '4%',
     }
 })
 

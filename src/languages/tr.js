@@ -26,6 +26,8 @@ export default {
     passwordError3: 'Şifre en az 1 rakam bulundurmalıdır.',
     passwordError4: 'Şifre kullanıcı adıyla veya emaille aynı olamaz.',
     generalError: 'Lütfen kullanıcı adı, email ve şifrenizi tekrar kontrol ediniz.',
+    checkBoxText1: 'Bu kutuyu işaretleyerek bu anlaşmaları kabul ediyorsunuz',
+    checkBoxText2: 've',
 
     //HomeScreen
     home: 'Ana Sayfa',    
