@@ -64,6 +64,20 @@ export default {
     darkTheme: 'Koyu Tema',
     signOut: 'Çıkış Yap',
 
+    //HomeScreen -> Flag
+    flagTitle: 'Gönderiyi Şikayet Et',
+    flagSubtitle: 'Lütfen şikayet için bir sebep seçiniz.',
+    nudity: 'Bu gönderi çıplaklık barındırıyor',
+    hate: 'Bu gönderi gereksiz bir nefret barındırıyor',
+    violence: 'Bu gönderi fazla şiddet barındırıyor',
+    illegal: 'Bu gönderi illegal bilgiler barındırıyor',
+    steal: 'Bu gönderi başka bir hesaptan çalıntıdır',
+    suicidal: 'Bu gönderi intihara meyil edecek bir içerik barındırıyor',
+    untruth: 'Bu gönderi manipüle edebilecek yanlış ifadeler barındırıyor',
+    spam: 'Bu gönderi bir spamdır',
+    report: 'Şikayet Et',
+    flagPlaceholder: '--Şikayet--',
+
     //SearchScreen
     search: 'Ara',
     posts: 'Gönderiler',

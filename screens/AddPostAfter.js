@@ -99,6 +99,9 @@ export function AddPostAfter({navigation, route, addPost}) {
         },
     }
 
+    const pickerStyle = Platform.OS === 'ios' ? pickerIOSStyle : pickerAndroidStyle
+    const behavior = Platform.OS === 'ios' ? "padding" : "undefined"
+
     const setPicker = () => {
         if (Platform.OS === 'ios') {
             return (
@@ -125,9 +128,6 @@ export function AddPostAfter({navigation, route, addPost}) {
             )
         }
     }
-
-    const pickerStyle = Platform.OS === 'ios' ? pickerIOSStyle : pickerAndroidStyle
-    const behavior = Platform.OS === 'ios' ? "padding" : "undefined"
 
     const items = [
         { label: languages.movies, value: 7, key: 7},

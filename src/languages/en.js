@@ -64,6 +64,21 @@ export default {
     darkTheme: 'Dark Theme',
     signOut: 'Sign Out',
 
+    //HomeScreen -> Flag
+    flagTitle: 'Report This Post',
+    flagSubtitle: 'Please select a reason for reporting?',
+    nudity: 'This post contains nudity',
+    hate: 'This post contains hate towards someone or something',
+    violence: 'This post contains violence that shouldn\'t seen by children',
+    illegal: 'This post contains information that is illegal',
+    steal: 'This post is copied from another account',
+    suicidal: 'This post contains suicidal content',
+    untruth: 'This post contains untruthful information that may manipulate people',
+    spam: 'This post is spam',
+    report: 'Report',
+    flagPlaceholder: '--Report--',
+
+
     //SearchScreen
     search: 'Search',
     posts: 'Posts',

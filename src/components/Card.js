@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import { Rating } from 'react-native-rating-element'
 import TimeAgo from 'react-native-timeago'
 import Modal from 'react-native-modal'
-import { SafeAreaView, StyleSheet, Image, Pressable, Dimensions } from 'react-native'
+import { SafeAreaView, StyleSheet, Image, Pressable, Dimensions, TouchableOpacity, Platform } from 'react-native'
+import Entypo from 'react-native-vector-icons/Entypo'
+import RNPickerSelect from 'react-native-picker-select'
+import { Button } from 'react-native-paper'
 /* import SwipeableRating from 'react-native-swipeable-rating' */
 
 import { ratePost, rateUpdate } from '../actions/posts'
@@ -28,6 +31,8 @@ export class Card extends React.Component {
             rate: 0,
             isVisible: false,
             isVideoPaused: true,
+            flagReason: 0,
+            isReportVisible: false
         }
         this.videoRef = createRef()
     }
@@ -56,6 +61,9 @@ export class Card extends React.Component {
         //POST
         if (!shallowEqual(this.props.post, nextProps.post))
             return true
+        //PICKER
+        if (this.state.flagReason !== nextState.flagReason)
+            return true
         
         return false
     }
@@ -83,6 +91,7 @@ export class Card extends React.Component {
         const rate = nextProps.post.rated_by[nextProps.currentUserId] ? nextProps.post.rated_by[nextProps.currentUserId].rate : 0
         if (prevState.rate !== rate)
             return { rate: rate }
+
         return null
     }
 
@@ -131,7 +140,25 @@ export class Card extends React.Component {
         return parseFloat(parseFloat(post.avg_rate).toFixed(2))
     }
 
-    hideModal = () => {this.setModalVisible(false)}
+    hideModal = () => {
+        this.setModalVisible(false)
+        this.setState({ isReportVisible: false })
+    }
+
+    hideReportModal = () => { this.setState({ isReportVisible: false }) }
+
+    showReportModal = () => { 
+        this.setState({ isReportVisible: true })
+        this.setModalVisible(true)
+        console.log(this.state.isReportVisible)
+    }
+
+    
+    setReportReason = (val, ind) => { 
+        this.setState({ flagReason: val },
+        () => console.log("state", this.state.flagReason))
+        
+    }
 
     /* onLayout = obj => {
         const { currentIndex, itemHeights } = this.props
@@ -152,6 +179,98 @@ export class Card extends React.Component {
     ratedByNoneStyle = () => {
         const { colors } = this.props
         return {fontWeight: 'bold', marginRight: 4, color: colors.ratedBy}
+    }
+
+    items = [
+        { label: languages.nudity, value: 1, key: 1},
+        { label: languages.hate, value: 2, key: 2},
+        { label: languages.violence, value: 3, key: 3},
+        { label: languages.illegal, value: 4, key: 4},
+        { label: languages.steal, value: 5, key: 5},
+        { label: languages.suicidal, value: 6, key: 6},
+        { label: languages.untruth, value: 7, key: 7},
+        { label: languages.spam, value: 8, key: 8}
+    ]
+
+    pickerIOSStyle = {
+        inputIOSContainer: {
+            width: '100%',
+            alignItems: 'center',                                        
+        },
+        inputIOS: {
+            color: this.props.colors.text,
+            width: '100%',
+            textAlign: 'center',
+            fontSize: responsiveScreenFontSize(1.6)
+        },
+        placeholder: {
+            color: '#8f8f8f'
+        },
+        viewContainer: {
+            width: '90%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderColor: this.props.colors.inputBorderColor,
+            backgroundColor: this.props.colors.inputBackgroundColor,
+            borderRadius: 4,
+            borderWidth: 1,
+            height: 38,
+            alignSelf: 'center'
+        }
+    }
+
+    pickerAndroidStyle = {
+        placeholder: {
+            color: '#8f8f8f'
+        },
+        inputAndroid: {
+            color: this.props.colors.text,
+            textAlign: 'center',
+            borderColor: this.props.colors.inputBorderColor,
+            borderWidth: 1,
+            width: '100%',
+            borderRadius: 4,
+            backgroundColor: this.props.colors.inputBackgroundColor,
+            marginLeft: '6%'
+        },
+    }
+
+    placeholder = {
+        label: languages.flagPlaceholder,
+        value: null,
+        color: '#8f8f8f'
+    }
+
+    setPicker = () => {
+        const { flagReason } = this.state
+        if (Platform.OS === 'ios') {
+            return (
+                <RNPickerSelect 
+                    onValueChange={this.setReportReason}
+                    placeholder={this.placeholder}
+                    value={flagReason}
+                    style={this.pickerIOSStyle}
+                    items={this.items}
+                />
+            )
+        } else {
+            return (
+                <SafeAreaView style={styles.inlineCategoryContainer}>
+                    <RNPickerSelect 
+                        onValueChange={this.setReportReason}
+                        placeholder={this.placeholder}
+                        value={flagReason}
+                        useNativeAndroidPickerStyle={false}
+                        style={this.pickerAndroidStyle}
+                        items={this.items}
+                    />
+                </SafeAreaView>
+            )
+        }
+    }
+
+    onFlag = () => {
+        console.log("flagged")
     }
     
     starFilledColored = require('../../assets/icons/starFilledColored.png')
@@ -189,6 +308,9 @@ export class Card extends React.Component {
                     </SafeAreaView>
                     <SafeAreaView style={styles.postTitle}>
                         <CustomText style={this.postTitleStyle()}>{post.title}</CustomText>
+                        <TouchableOpacity style={styles.flag} onPress={this.showReportModal}>
+                            <Entypo name="flag" size={18} color={"grey"} />
+                        </TouchableOpacity>
                     </SafeAreaView>
                 </SafeAreaView>
                 <SafeAreaView style={styles.postImage}>
@@ -259,18 +381,40 @@ export class Card extends React.Component {
                     onSwipeComplete={this.hideModal}
                     useNativeDriver={false}
                 >
-                    <SafeAreaView style={[styles.modalContainer, {backgroundColor: colors.modal}]}>
-                        {Object.values(post.rated_by).map(rater => (
-                            <Rater 
-                                rater={rater} 
-                                navigation={navigation} 
-                                setModalVisible={this.setModalVisible}
-                                fullstarIcon={this.starFilled} 
-                                emptystarIcon={this.starEmpty}
-                                key={rater.id} 
-                            />
-                        ))}
-                    </SafeAreaView>
+                    {this.state.isReportVisible ? 
+                        <SafeAreaView style={styles.flagContainer}>
+                            <SafeAreaView style={styles.flagHeader}>
+                                <CustomText style={styles.flagHeaderText}>{languages.flagTitle}</CustomText>
+                            </SafeAreaView>
+                            <SafeAreaView style={styles.flagSubtitleView}>
+                                <CustomText style={styles.flagSubtitleText}>{languages.flagSubtitle}</CustomText>
+                            </SafeAreaView>
+                            {this.setPicker()}
+                            <Button
+                                mode="contained"
+                                color="#fb8208" 
+                                labelStyle={styles.reportText}
+                                contentStyle={styles.reportContentStyle}
+                                style={styles.reportButton} 
+                                onPress={this.onFlag}    
+                            >
+                                {languages.report}
+                            </Button>
+                        </SafeAreaView>
+                        :
+                        <SafeAreaView style={[styles.modalContainer, {backgroundColor: colors.modal}]}>
+                            {Object.values(post.rated_by).map(rater => (
+                                <Rater 
+                                    rater={rater} 
+                                    navigation={navigation} 
+                                    setModalVisible={this.setModalVisible}
+                                    fullstarIcon={this.starFilled} 
+                                    emptystarIcon={this.starEmpty}
+                                    key={rater.id} 
+                                />
+                            ))}
+                        </SafeAreaView>
+                    }
                 </Modal>
             </SafeAreaView>
         )
@@ -288,6 +432,8 @@ const styles = StyleSheet.create({
     },
     postTitle: {
         alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     userInfo: {
         flexDirection: 'row',
@@ -349,6 +495,48 @@ const styles = StyleSheet.create({
     },
     ratedBy: {
         marginBottom: '3%'
+    },
+    flag: {
+        position: 'absolute', 
+        right: '3%', 
+        bottom: '8%', 
+        width: 25, 
+        alignItems: 'center'
+    },
+    flagModal: {
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+    flagContainer: {
+        backgroundColor: '#3b3b3b',
+        height: '45%',
+        borderRadius: 10,
+        width: '100%',
+        alignItems: 'center'
+    },
+    flagHeader: {
+        marginTop: '4%'
+    },
+    flagHeaderText: {
+        color: 'white',
+        fontSize: responsiveScreenFontSize(2.5),
+        fontWeight: 'bold'
+    },
+    flagSubtitleView: {
+
+    },
+    flagSubtitleText: {
+        color: 'white',
+        marginTop: '3%',
+        marginBottom: '15%'
+    },
+    reportButton: {
+        marginTop: '11%',
+        width: '48%'
+    },
+    reportText: {
+        fontWeight: 'bold',
+        fontSize: responsiveScreenFontSize(2.2)
     }
 })
 

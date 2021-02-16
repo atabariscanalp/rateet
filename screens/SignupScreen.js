@@ -107,8 +107,8 @@ export function SignupScreen({navigation, register}) {
     }
 
     const handleRegister = () => {
-        checkIfEmailIsTaken()
-        checkIfUsernameIsTaken()
+        checkIfEmailIsTaken() //MAKE ASYNC
+        checkIfUsernameIsTaken() //MAKE ASYNC
         if (!usernameError && !emailError && !passwordError && checked) 
             register(email, username, password)
         
