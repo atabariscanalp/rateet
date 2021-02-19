@@ -47,7 +47,9 @@ import {
         GET_MORE_POSTS_FAIL,
         GET_COMMENTS_FOR_POST_FETCHING,
         GET_COMMENTS_FOR_POST_SUCCESS,
-        GET_COMMENTS_FOR_POST_FAIL} from '../constants/index'
+        GET_COMMENTS_FOR_POST_FAIL,
+        REPORT_POST_SUCCESS,
+        REPORT_POST_FAIL} from '../constants/index'
 
         
 //GET POSTS
@@ -288,6 +290,27 @@ export const getComments = () => dispatch => {
                     type: GET_COMMENTS_FAIL
                 })
         })
+}
+
+//REPORT POST
+export const reportPost = (postId, reportText) => dispatch => {
+    const config = {
+        withCredentials: true
+    }
+
+    const body = JSON.stringify({ report: reportText })
+
+    axios.post(`${FETCH_URL}/api/v1/p/report/${postId}`, body, config)
+    .then(() => {
+        dispatch({
+            type: REPORT_POST_SUCCESS
+        })
+    }).catch(err => {
+        console.log(err)
+        dispatch({
+            type: REPORT_POST_FAIL
+        })
+    })
 }
 
 

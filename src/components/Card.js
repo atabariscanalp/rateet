@@ -7,9 +7,11 @@ import { SafeAreaView, StyleSheet, Image, Pressable, Dimensions, TouchableOpacit
 import Entypo from 'react-native-vector-icons/Entypo'
 import RNPickerSelect from 'react-native-picker-select'
 import { Button } from 'react-native-paper'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import * as Animatable from 'react-native-animatable'
 /* import SwipeableRating from 'react-native-swipeable-rating' */
 
-import { ratePost, rateUpdate } from '../actions/posts'
+import { ratePost, rateUpdate, reportPost } from '../actions/posts'
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
 import RatedBy from './RatedBy'
@@ -31,8 +33,9 @@ export class Card extends React.Component {
             rate: 0,
             isVisible: false,
             isVideoPaused: true,
-            flagReason: 0,
-            isReportVisible: false
+            reportText: '',
+            isReportVisible: false,
+            reportSent: false,
         }
         this.videoRef = createRef()
     }
@@ -62,9 +65,15 @@ export class Card extends React.Component {
         if (!shallowEqual(this.props.post, nextProps.post))
             return true
         //PICKER
-        if (this.state.flagReason !== nextState.flagReason)
+        if (this.state.reportText !== nextState.reportText)
             return true
-        
+        //REPORT_SENT
+        if (this.state.reportSent !== nextState.reportSent)
+            return true
+        //REPORT_VISIBLE
+        if (this.state.isReportVisible !== nextState.isReportVisible)
+            return true
+
         return false
     }
     
@@ -143,21 +152,19 @@ export class Card extends React.Component {
     hideModal = () => {
         this.setModalVisible(false)
         this.setState({ isReportVisible: false })
+        this.setState({ reportSent: false })
+        this.setState({ reportText: '' })
     }
-
-    hideReportModal = () => { this.setState({ isReportVisible: false }) }
 
     showReportModal = () => { 
         this.setState({ isReportVisible: true })
         this.setModalVisible(true)
-        console.log(this.state.isReportVisible)
     }
 
     
     setReportReason = (val, ind) => { 
-        this.setState({ flagReason: val },
-        () => console.log("state", this.state.flagReason))
-        
+        this.setState({ reportText: val },
+        () => console.log("state", this.state.reportText))
     }
 
     /* onLayout = obj => {
@@ -182,14 +189,15 @@ export class Card extends React.Component {
     }
 
     items = [
-        { label: languages.nudity, value: 1, key: 1},
-        { label: languages.hate, value: 2, key: 2},
-        { label: languages.violence, value: 3, key: 3},
-        { label: languages.illegal, value: 4, key: 4},
-        { label: languages.steal, value: 5, key: 5},
-        { label: languages.suicidal, value: 6, key: 6},
-        { label: languages.untruth, value: 7, key: 7},
-        { label: languages.spam, value: 8, key: 8}
+        { label: languages.notRelated, value: 'not-related', key: 9},
+        { label: languages.spam, value: 'spam', key: 8},
+        { label: languages.nudity, value: 'nudity', key: 1},
+        { label: languages.hate, value: 'hate', key: 2},
+        { label: languages.violence, value: 'violence', key: 3},
+        { label: languages.illegal, value: 'illegal', key: 4},
+        { label: languages.steal, value: 'steal', key: 5},
+        { label: languages.suicidal, value: 'suicidal', key: 6},
+        { label: languages.untruth, value: 'untruth', key: 7},
     ]
 
     pickerIOSStyle = {
@@ -228,10 +236,11 @@ export class Card extends React.Component {
             textAlign: 'center',
             borderColor: this.props.colors.inputBorderColor,
             borderWidth: 1,
-            width: '100%',
             borderRadius: 4,
             backgroundColor: this.props.colors.inputBackgroundColor,
-            marginLeft: '6%'
+            alignItems: 'center',
+            minWidth: '100%',
+            fontSize: responsiveScreenFontSize(1.6)
         },
     }
 
@@ -242,13 +251,13 @@ export class Card extends React.Component {
     }
 
     setPicker = () => {
-        const { flagReason } = this.state
+        const { reportText } = this.state
         if (Platform.OS === 'ios') {
             return (
                 <RNPickerSelect 
                     onValueChange={this.setReportReason}
                     placeholder={this.placeholder}
-                    value={flagReason}
+                    value={reportText}
                     style={this.pickerIOSStyle}
                     items={this.items}
                 />
@@ -259,7 +268,7 @@ export class Card extends React.Component {
                     <RNPickerSelect 
                         onValueChange={this.setReportReason}
                         placeholder={this.placeholder}
-                        value={flagReason}
+                        value={reportText}
                         useNativeAndroidPickerStyle={false}
                         style={this.pickerAndroidStyle}
                         items={this.items}
@@ -269,8 +278,12 @@ export class Card extends React.Component {
         }
     }
 
+
     onFlag = () => {
-        console.log("flagged")
+        const { reportPost, post } = this.props
+        const { reportText } = this.state
+        reportPost(post.id, reportText)
+        this.setState({ reportSent: true })
     }
     
     starFilledColored = require('../../assets/icons/starFilledColored.png')
@@ -381,26 +394,35 @@ export class Card extends React.Component {
                     onSwipeComplete={this.hideModal}
                     useNativeDriver={false}
                 >
-                    {this.state.isReportVisible ? 
-                        <SafeAreaView style={styles.flagContainer}>
-                            <SafeAreaView style={styles.flagHeader}>
-                                <CustomText style={styles.flagHeaderText}>{languages.flagTitle}</CustomText>
+                    {this.state.isReportVisible ?
+                            <SafeAreaView style={styles.flagContainer}>
+                                {!this.state.reportSent ? 
+                                    <SafeAreaView style={styles.reportInnerView}>
+                                        <SafeAreaView style={styles.flagHeader}>
+                                            <CustomText style={styles.flagHeaderText}>{languages.flagTitle}</CustomText>
+                                        </SafeAreaView>
+                                        <SafeAreaView style={styles.flagSubtitleView}>
+                                            <CustomText style={styles.flagSubtitleText}>{languages.flagSubtitle}</CustomText>
+                                        </SafeAreaView>
+                                        {this.setPicker()}
+                                        <Button
+                                        mode="contained"
+                                        color="#fb8208" 
+                                        labelStyle={styles.reportText}
+                                        contentStyle={styles.reportContentStyle}
+                                        style={styles.reportButton} 
+                                        onPress={this.onFlag}    
+                                        >
+                                            {languages.report}
+                                        </Button>
+                                    </SafeAreaView>
+                                :
+                                    <Animatable.View style={styles.reportInnerView} animation="slideInRight">
+                                        <AntDesign name="checkcircleo" color="green" size={90} style={styles.logo}/>
+                                        <CustomText style={styles.reportSentText}>{languages.reportSent}</CustomText>
+                                    </Animatable.View>
+                                }
                             </SafeAreaView>
-                            <SafeAreaView style={styles.flagSubtitleView}>
-                                <CustomText style={styles.flagSubtitleText}>{languages.flagSubtitle}</CustomText>
-                            </SafeAreaView>
-                            {this.setPicker()}
-                            <Button
-                                mode="contained"
-                                color="#fb8208" 
-                                labelStyle={styles.reportText}
-                                contentStyle={styles.reportContentStyle}
-                                style={styles.reportButton} 
-                                onPress={this.onFlag}    
-                            >
-                                {languages.report}
-                            </Button>
-                        </SafeAreaView>
                         :
                         <SafeAreaView style={[styles.modalContainer, {backgroundColor: colors.modal}]}>
                             {Object.values(post.rated_by).map(rater => (
@@ -537,16 +559,31 @@ const styles = StyleSheet.create({
     reportText: {
         fontWeight: 'bold',
         fontSize: responsiveScreenFontSize(2.2)
+    },
+    reportSentText: {
+        color: 'white'
+    },
+    logo: {
+        marginBottom: '5%'
+    },
+    reportInnerView: {
+        flex: 1, 
+        width: '100%', 
+        height: '100%', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+    },
+    inlineCategoryContainer: {
+        width: '90%',
+        alignItems: 'center',
     }
 })
 
 function mapStateToProps(state, ownProps) {
     const userId = state.auth.user.pk
-    //const postId = ownProps.post.id
     return {
         currentUserId: userId,
-        //avgRate: getAverageRateInfo(state, postId),
     }
 }
 
-export default connect(mapStateToProps, { ratePost, rateUpdate })(Card)
+export default connect(mapStateToProps, { ratePost, rateUpdate, reportPost })(Card)

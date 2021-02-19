@@ -77,7 +77,10 @@ export default {
     spam: 'Bu gönderi bir spamdır',
     report: 'Şikayet Et',
     flagPlaceholder: '--Şikayet--',
+    notRelated: 'Bu gönderi kategoriyle alakalı değil',
+    reportSent: 'Şikayet gönderildi.',
 
+    
     //SearchScreen
     search: 'Ara',
     posts: 'Gönderiler',

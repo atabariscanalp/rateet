@@ -147,10 +147,11 @@ export function SignupScreen({navigation, register}) {
                 />
             ) 
 
-        return ( //TEST ON A DEVICE
+        return (
             <Checkbox 
                 status={checked ? 'checked' : 'unchecked'}
                 onPress={check}
+                uncheckedColor={"grey"}
             />
         )
     }
