@@ -22,10 +22,12 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
+const composeEnhancers = composeWithDevTools({ trace: true, traceLimiy: 25 })
+
 const store = createStore(
     persistedReducer,
     initialState,
-    composeWithDevTools(applyMiddleware(...middleware))
+    composeEnhancers(applyMiddleware(...middleware))
 )
 
 const persistor = persistStore(store)

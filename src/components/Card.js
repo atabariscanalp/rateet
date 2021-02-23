@@ -406,12 +406,12 @@ export class Card extends React.Component {
                                         </SafeAreaView>
                                         {this.setPicker()}
                                         <Button
-                                        mode="contained"
-                                        color="#fb8208" 
-                                        labelStyle={styles.reportText}
-                                        contentStyle={styles.reportContentStyle}
-                                        style={styles.reportButton} 
-                                        onPress={this.onFlag}    
+                                            mode="contained"
+                                            color="#fb8208" 
+                                            labelStyle={styles.reportText}
+                                            contentStyle={styles.reportContentStyle}
+                                            style={styles.reportButton} 
+                                            onPress={this.onFlag}    
                                         >
                                             {languages.report}
                                         </Button>

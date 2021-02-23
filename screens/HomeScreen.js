@@ -1,14 +1,16 @@
 import React from 'react'
-import { StyleSheet, SafeAreaView, StatusBar, LogBox, Dimensions, ActivityIndicator } from 'react-native'
+import { StyleSheet, SafeAreaView, StatusBar, LogBox, Dimensions, ActivityIndicator, Platform } from 'react-native'
 import { connect} from 'react-redux'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 
 import { getPosts, incrementPage, getMorePosts } from '../src/actions/posts'
-import { getFetchingInfo, getNextPageUrlInfo, getPageInfo, getPostsInfo } from '../src/constants/selector'
+import { getBlockedUsersInfo, getFetchingInfo, getNextPageUrlInfo, getPageInfo, getPostsInfo } from '../src/constants/selector'
 import Card from '../src/components/Card'
 import Add from '../src/components/Admob'
 import { shallowEqual } from '../src/constants/context'
 import { useTheme } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { registerDevice } from '../src/actions/user'
 
 
 const PAGE_SIZE = 20
@@ -52,6 +54,13 @@ export class HomeScreen extends React.Component {
         LogBox.ignoreLogs([
             'Non-serializable values were found in the navigation state',
         ])
+
+        AsyncStorage.getItem('fcm_token').then(token => {
+            if (token)
+              this.props.registerDevice(token, Platform.OS)
+            else 
+              console.log("no token: ", token)
+          })
 
         this.props.getPosts(1, PAGE_SIZE)
     }
@@ -141,10 +150,24 @@ export class HomeScreen extends React.Component {
         )
     }
 
+    doesArrayContains = (prop) => {
+        const { blockedUsers } = this.props
+        blockedUsers.map(id => {
+            if (prop === id)
+                return true
+        })
+        return false
+    }
+
     render(){
         const { isRefreshing } = this.state
         const { colors, scrollRef } = this.props.route.params
         const { posts, navigation } = this.props
+
+        posts.map((val, ind) => {
+            if (this.doesArrayContains(val.author.pk))
+                posts.splice(ind, 1)
+        })
 
         console.log("HOMESCREEN RENDER! ")
 
@@ -206,8 +229,9 @@ const mapStateToProps = state => {
         page: getPageInfo(state),
         fetching: getFetchingInfo(state),
         nextPageUrl: getNextPageUrlInfo(state),
-        posts: getPostsInfo(state)
+        posts: getPostsInfo(state),
+        blockedUsers: getBlockedUsersInfo(state)
     }
 }
 
-export default connect(mapStateToProps, { getPosts, incrementPage, getMorePosts })(HomeScreen)
+export default connect(mapStateToProps, { getPosts, incrementPage, getMorePosts, registerDevice })(HomeScreen)

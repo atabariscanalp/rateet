@@ -2,7 +2,9 @@ import { produce, enableES5 } from 'immer'
 import { ADD_COMMENT_SUCCESS,
     ADD_POST,
     ALL_USERS_LOADED_SUCCESS, 
+    BLOCK_USER_SUCCESS, 
     DELETE_COMMENT_SUCCESS, 
+    GET_BLOCKED_USERS_SUCCESS, 
     PROFILE_LOAD_SUCCESS, 
     PROFILE_PHOTO_UPLOAD_SUCCESS, 
     RATE_CHILD_COMMENT_SUCCESS, 
@@ -12,7 +14,8 @@ import { ADD_COMMENT_SUCCESS,
     RATE_UPDATE_CHILD_COMMENT_SUCCESS, 
     REGISTER_SUCCESS, 
     REPLY_COMMENT_SUCCESS,
-    THEME_CHANGED_SUCCESS} from '../constants'
+    THEME_CHANGED_SUCCESS,
+    UNBLOCK_USER_SUCCESS} from '../constants'
 
 const initialState = {
     usersById: {},
@@ -23,11 +26,35 @@ const profileState = {
     user: {},
     posts: {},
     avgRate: "",
-    postCount: 0
+    postCount: 0,
 }
 
 const uiState = {
     isDark: false
+}
+
+export function blockedUsers(state = [], action){
+    enableES5()
+    return (
+        produce(state, draft => {
+            switch (action.type) {
+                case GET_BLOCKED_USERS_SUCCESS:
+                    action.payload.blocked_users.map(id => {
+                        draft.push(id)
+                    })
+                    break
+                case BLOCK_USER_SUCCESS:
+                    draft.push(action.userId)
+                    break
+                case UNBLOCK_USER_SUCCESS:
+                    var index = draft.indexOf(action.userId)
+                    draft.splice(index, 1)
+                    break
+                default:
+                    return draft
+            }
+        })
+    )
 }
 
 export function ui(state = uiState, action){

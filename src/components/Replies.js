@@ -5,7 +5,7 @@ import { connect, useSelector } from 'react-redux'
 import { useNavigation, useTheme } from '@react-navigation/native'
 
 import { rateChildComment, rateUpdateChildComment } from '../actions/posts'
-import { getAuthenticatedUser } from '../constants/selector'
+import { getAuthenticatedUser, getBlockedUsersInfo } from '../constants/selector'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { MemoizedProfilePhoto } from './PostProfilePhoto'
 import { CustomText } from '../../shared/components'
@@ -16,6 +16,7 @@ export function Replies({reply, parentId, postId, rateChildComment, rateUpdateCh
 
     //SELECTORS
     const currentUser = useSelector(getAuthenticatedUser)
+    const blockedUsers = useSelector(getBlockedUsersInfo)
     //STATES
     const [rate, setRate] = useState(0)
     //THEME HOOK
@@ -44,6 +45,14 @@ export function Replies({reply, parentId, postId, rateChildComment, rateUpdateCh
         commentRef.current.focus()
         setParentId(parentId)
     }
+
+    const doesArrayContains = (prop) => {
+        blockedUsers.map(id => {
+            if (prop === id)
+                return true
+        })
+        return false
+    }
     //DYNAMIC STYLES
     const authorStyle = {fontWeight: 'bold', marginLeft: 4, color: colors.comment, fontSize: responsiveScreenFontSize(1.6)}
     const contentStyle = {color: colors.comment, fontSize: responsiveScreenFontSize(1.7)}
@@ -54,50 +63,54 @@ export function Replies({reply, parentId, postId, rateChildComment, rateUpdateCh
     useEffect(() => {
         if (reply.rated_by[currentUserId])
             setRate(reply.rated_by[currentUserId].rate)
+        
     }, [reply.rated_by, currentUserId])
 
-    return (
-        <SafeAreaView style={styles.comment}>
-            <SafeAreaView style={styles.innerComment}>
-                <SafeAreaView style={styles.flexRow}>
-                    <TouchableOpacity style={styles.commentInfo} onPress={navigateToProfile}>
-                        <MemoizedProfilePhoto size={25} userId={reply.author.pk} />
-                        <CustomText style={authorStyle}>{reply.author.username}</CustomText>
-                    </TouchableOpacity>
-                    <SafeAreaView style={styles.commentContent}>
-                        <CustomText style={contentStyle}>{reply.content}</CustomText>
-                        <SafeAreaView style={styles.commentMeta}>
-                            <SafeAreaView style={styles.flexRow}>
-                                <CustomText onPress={replyPress} style={replyStyle}>{languages.reply}</CustomText>
-                                <Rating 
-                                    type="custom"
-                                    rated={rate}
-                                    selectedIconImage={starFilledColored}
-                                    emptyIconImage={starEmptyColored}
-                                    size={14}
-                                    marginBetweenRatingIcon={0.2}
-                                    onIconTap={onRateComment}
-                                />
+    if (!doesArrayContains(reply.author.pk))
+        return (
+            <SafeAreaView style={styles.comment}>
+                <SafeAreaView style={styles.innerComment}>
+                    <SafeAreaView style={styles.flexRow}>
+                        <TouchableOpacity style={styles.commentInfo} onPress={navigateToProfile}>
+                            <MemoizedProfilePhoto size={25} userId={reply.author.pk} />
+                            <CustomText style={authorStyle}>{reply.author.username}</CustomText>
+                        </TouchableOpacity>
+                        <SafeAreaView style={styles.commentContent}>
+                            <CustomText style={contentStyle}>{reply.content}</CustomText>
+                            <SafeAreaView style={styles.commentMeta}>
+                                <SafeAreaView style={styles.flexRow}>
+                                    <CustomText onPress={replyPress} style={replyStyle}>{languages.reply}</CustomText>
+                                    <Rating 
+                                        type="custom"
+                                        rated={rate}
+                                        selectedIconImage={starFilledColored}
+                                        emptyIconImage={starEmptyColored}
+                                        size={14}
+                                        marginBetweenRatingIcon={0.2}
+                                        onIconTap={onRateComment}
+                                    />
+                                </SafeAreaView>
                             </SafeAreaView>
                         </SafeAreaView>
                     </SafeAreaView>
-                </SafeAreaView>
-                <SafeAreaView style={styles.rating}>
-                    <CustomText style={avgRateStyle}>{avgRate !== 0 ? avgRate : null}</CustomText>
-                    <Rating 
-                        type="custom"
-                        rated={avgRate}
-                        selectedIconImage={starFilled}
-                        emptyIconImage={starEmpty}
-                        size={10}
-                        ratingBackgroundColor="#f2f2f2"
-                        marginBetweenRatingIcon={0.1}
-                        readonly={true}
-                    />
+                    <SafeAreaView style={styles.rating}>
+                        <CustomText style={avgRateStyle}>{avgRate !== 0 ? avgRate : null}</CustomText>
+                        <Rating 
+                            type="custom"
+                            rated={avgRate}
+                            selectedIconImage={starFilled}
+                            emptyIconImage={starEmpty}
+                            size={10}
+                            ratingBackgroundColor="#f2f2f2"
+                            marginBetweenRatingIcon={0.1}
+                            readonly={true}
+                        />
+                    </SafeAreaView>
                 </SafeAreaView>
             </SafeAreaView>
-        </SafeAreaView>
-    )
+        )
+    else
+        return null
 }
 
 const styles = StyleSheet.create({

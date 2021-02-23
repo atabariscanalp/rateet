@@ -6,20 +6,17 @@ import admob, { MaxAdContentRating } from '@react-native-firebase/admob'
 
 import language from './src/languages/Languages'
 import { loadUser } from './src/actions/auth'
-import { changePrefferedLanguage, getUsers, registerDevice } from './src/actions/user'
+import { changePrefferedLanguage, getBlockedUsers, getUsers, registerDevice } from './src/actions/user'
 import { MainStack }  from './screens/navigation'
 import { ThemeContext, themes } from './src/constants/context'
 import { refreshToken, registerAppWithFCM, unSubscribeRefreshToken, checkPermission, messageListener } from './src/notifications/FCM'
-import { getIsAuthenticatedInfo, getIsDarkThemeInfo, getPreferredLanguageInfo } from './src/constants/selector'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Platform } from 'react-native'
+import { getIsDarkThemeInfo, getPreferredLanguageInfo } from './src/constants/selector'
 import { notificationLinking } from './src/notifications/DeepLinking'
 
 
-const App = ({ loadUser, getUsers, registerDevice, changePrefferedLanguage }) => {
+const App = ({ loadUser, getUsers, registerDevice, changePrefferedLanguage, getBlockedUsers }) => {
 
   const isDark = useSelector(getIsDarkThemeInfo)
-  const isAuthenticated = useSelector(getIsAuthenticatedInfo)
   const prefferedLanguage = useSelector(getPreferredLanguageInfo)
 
   const [isDarkTheme, setIsDarkTheme] = useState(isDark)
@@ -54,6 +51,7 @@ const App = ({ loadUser, getUsers, registerDevice, changePrefferedLanguage }) =>
 
 
   const chooseLanguage = useCallback(() => {
+
       const lng = language.getInterfaceLanguage().substring(0,2)
 
       let moment = require('moment')
@@ -73,6 +71,7 @@ const App = ({ loadUser, getUsers, registerDevice, changePrefferedLanguage }) =>
 
   useEffect(() => {
     chooseLanguage()
+    getBlockedUsers()
 
     checkPermission()
     registerAppWithFCM()
@@ -82,20 +81,11 @@ const App = ({ loadUser, getUsers, registerDevice, changePrefferedLanguage }) =>
     loadUser()
     getUsers()
 
-    if (isAuthenticated) {
-      AsyncStorage.getItem('fcm_token').then(token => {
-        if (token)
-          registerDevice(token, Platform.OS)
-        else 
-          console.log("no token: ", token)
-      })
-    }
-
     return () => {
       messageListener()
       unSubscribeRefreshToken()
     }
-  }, [chooseLanguage, getUsers, isAuthenticated, loadUser, registerDevice])
+  }, [chooseLanguage, getBlockedUsers, getUsers, loadUser, registerDevice])
 
 
 
@@ -110,4 +100,4 @@ const App = ({ loadUser, getUsers, registerDevice, changePrefferedLanguage }) =>
   )
 }
 
-export default connect(null, { loadUser, getUsers, registerDevice, changePrefferedLanguage })(App)
+export default connect(null, { loadUser, getUsers, registerDevice, changePrefferedLanguage, getBlockedUsers })(App)

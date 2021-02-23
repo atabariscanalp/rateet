@@ -1,21 +1,23 @@
-import React, { useEffect, useCallback, useMemo } from 'react'
+import React, { useEffect, useCallback, useMemo, useState } from 'react'
 import { StyleSheet, Image,TouchableOpacity, StatusBar, SafeAreaView } from 'react-native'
-import { Title, Caption } from 'react-native-paper'
+import { Title, Caption, Button } from 'react-native-paper'
 import { Rating } from 'react-native-rating-element'
 import { responsiveScreenFontSize } from 'react-native-responsive-dimensions'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect, useSelector } from 'react-redux'
 import { useTheme, useIsFocused } from '@react-navigation/native'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import FastImage from 'react-native-fast-image'
+import Modal from 'react-native-modal'
 
 import Card from '../src/components/Card'
-import { getAuthenticatedUser, getProfileAvgRateInfo, getProfilePostsInfo, getProfileUserInfo } from '../src/constants/selector'
-import { loadProfile } from '../src/actions/user'
+import { getAuthenticatedUser, getBlockedUsersInfo, getProfileAvgRateInfo, getProfilePostsInfo, getProfileUserInfo, getUserBlockedInfo } from '../src/constants/selector'
+import { blockUser, loadProfile, unblockUser } from '../src/actions/user'
 import { CustomText } from '../shared/components'
 import languages from '../src/languages/Languages'
 
-export function ProfileScreen({navigation, route, loadProfile}) {
+export function ProfileScreen({navigation, route, loadProfile, blockUser, unblockUser}) {
 
     const FocusAwareStatusBar = (props) => {
         return isFocused ? <StatusBar {...props} /> : null
@@ -45,6 +47,8 @@ export function ProfileScreen({navigation, route, loadProfile}) {
 
     const viewabilityConfig = { viewAreaCoveragePercentThreshold: 80 }
 
+    const [isVisible, setIsVisible] = useState(false)
+
     const englishDarkLogo = require('../assets/icons/English-notfound-dark.png')
     const englishLightLogo = require('../assets/icons/English-notfound-light.png')
     const turkishDarkLogo = require('../assets/icons/Turkish-notfound-dark.png')
@@ -54,6 +58,7 @@ export function ProfileScreen({navigation, route, loadProfile}) {
     const userAvgRate = useSelector(getProfileAvgRateInfo)
     const userPosts = useSelector(getProfilePostsInfo)
     const authUser = useSelector(getAuthenticatedUser)
+    const blockedUsers = useSelector(getBlockedUsersInfo)
 
     const firstName = user.first_name
     const lastName = user.last_name
@@ -64,39 +69,52 @@ export function ProfileScreen({navigation, route, loadProfile}) {
     const starFilledBlack = require('../assets/icons/starFilledBlack.png')
     const starEmptyBlack = require('../assets/icons/starEmptyBlack.png')
 
+    var isUserBlocked = false
+    blockedUsers.map(id => {
+        if (id === user.pk)
+            isUserBlocked = true
+    })
 
     const listEmptyComponent = () => {
-        if (languages.getInterfaceLanguage().substring(0,2) === 'tr') {
-            if (colors.text === 'white') 
-                return (
-                    <SafeAreaView style={styles.listEmptyComponent}>
-                        <FastImage source={turkishDarkLogo} style={styles.notFoundIcon} resizeMode="contain"/>
-                    </SafeAreaView>
-                )
-        else 
+
+        if (isUserBlocked)
             return (
                 <SafeAreaView style={styles.listEmptyComponent}>
-                    <FastImage source={turkishLightLogo} style={styles.notFoundIcon} resizeMode="contain"/>
+                    <MaterialCommunityIcons name="block-helper" size={150} color={colors.text} />
                 </SafeAreaView>
             )
-        } else {
-            if (colors.text === 'white') 
-                return (
-                    <SafeAreaView style={styles.listEmptyComponent}>
-                        <FastImage source={englishDarkLogo} style={styles.notFoundIcon} resizeMode="contain"/>
-                    </SafeAreaView>
+        else {
+            if (languages.getInterfaceLanguage().substring(0,2) === 'tr') {
+                if (colors.text === 'white') 
+                    return (
+                        <SafeAreaView style={styles.listEmptyComponent}>
+                            <FastImage source={turkishDarkLogo} style={styles.notFoundIcon} resizeMode="contain"/>
+                        </SafeAreaView>
+                    )
+                else 
+                    return (
+                        <SafeAreaView style={styles.listEmptyComponent}>
+                            <FastImage source={turkishLightLogo} style={styles.notFoundIcon} resizeMode="contain"/>
+                        </SafeAreaView>
                 )
-            else 
-                return (
-                    <SafeAreaView style={styles.listEmptyComponent}>
-                        <FastImage source={englishLightLogo} style={styles.notFoundIcon} resizeMode="contain"/>
-                    </SafeAreaView>
-                )
-            
+            } else {
+                if (colors.text === 'white') 
+                    return (
+                        <SafeAreaView style={styles.listEmptyComponent}>
+                            <FastImage source={englishDarkLogo} style={styles.notFoundIcon} resizeMode="contain"/>
+                        </SafeAreaView>
+                    )
+                else 
+                    return (
+                        <SafeAreaView style={styles.listEmptyComponent}>
+                            <FastImage source={englishLightLogo} style={styles.notFoundIcon} resizeMode="contain"/>
+                        </SafeAreaView>
+                    )
+                }
+            }
         }
-    }
-
-    const ReturnProfileInfo = () => {
+            
+            const ReturnProfileInfo = () => {
         if (firstName && lastName){
             return (
                 <SafeAreaView style={styles.nameStlye}>
@@ -127,12 +145,42 @@ export function ProfileScreen({navigation, route, loadProfile}) {
         }
     }
 
+    const hideModal = () => { setIsVisible(false) }
+    const showModal = () => { setIsVisible(true) }
+
     const goBack = () => {navigation.goBack()}
     const editProfile = () => {navigation.navigate('edit-profile')}
     const getProfileImg = () => profilePhoto ? {uri: profilePhoto} : require('../assets/images/default-profile-pic.jpg')
 
     const renderItem = ({ item }) => <Card post={item} navigation={navigation} colors={colors} cellRefs={cellRefs} />
     const keyExtractor = post => post.id.toString()
+    const getData = () => {
+        if (isUserBlocked)
+            return null
+
+        return Object.values(userPosts)
+    }
+    const getPostCount = () => {
+        if (isUserBlocked)
+            return 0
+        
+        return postCount
+    }
+    const getAvgRate = () => {
+        if (isUserBlocked)
+            return 0
+        
+        return avgRateFloat
+    }
+
+    const block = () => {
+        blockUser(user.pk)
+        setIsVisible(false)
+    }
+    const unblock = () => {
+        unblockUser(user.pk)
+        setIsVisible(false)
+    }
 
     return (
         <KeyboardAwareFlatList
@@ -151,24 +199,26 @@ export function ProfileScreen({navigation, route, loadProfile}) {
                                     <Ionicons name="settings-outline" size={30} style={styles.settingsIcon} />
                                 </TouchableOpacity>
                                 :
-                                null
+                                <TouchableOpacity onPress={showModal}>
+                                    <MaterialCommunityIcons name="block-helper" size={30} style={styles.settingsIcon} />
+                                </TouchableOpacity>
                             }
                         </SafeAreaView>
                         <SafeAreaView style={styles.lineView} />
                         <SafeAreaView style={styles.profileMetaContainer}>
                             <SafeAreaView style={styles.postCountContainer}>
                                 <CustomText style={styles.posts}>{languages.posts}</CustomText>
-                                <CustomText style={styles.postCount}>{postCount}</CustomText>
+                                <CustomText style={styles.postCount}>{getPostCount()}</CustomText>
                             </SafeAreaView>
                             <SafeAreaView style={styles.rateContainer}>
                                 <CustomText style={styles.rateText}>{languages.ratedAveragely}</CustomText>
-                                <CustomText style={styles.avgRate}>{avgRateFloat}</CustomText>
+                                <CustomText style={styles.avgRate}>{getAvgRate()}</CustomText>
                                 <Rating 
                                     type="custom"
                                     selectedIconImage={starFilledBlack}
                                     emptyIconImage={starEmptyBlack}
                                     readonly={true}
-                                    rated={avgRateFloat}
+                                    rated={getAvgRate()}
                                     size={20}
                                     marginBetweenRatingIcon={0.1}
                                 />
@@ -189,14 +239,77 @@ export function ProfileScreen({navigation, route, loadProfile}) {
                         color: 'grey',
                         fontSize: responsiveScreenFontSize(2.2)}}>Posts</Text>
                     </SafeAreaView> */}
+                    <Modal
+                        isVisible={isVisible}
+                        coverScreen={true}
+                        onBackButtonPress={hideModal}
+                        onBackdropPress={hideModal}
+                        style={styles.modal}
+                        animationIn="slideInUp"
+                        animationOut="slideOutDown"
+                        backdropOpacity={0.3}
+                        swipeDirection="down"
+                        onSwipeComplete={hideModal}
+                        useNativeDriver={true}
+                    >
+                        {!isUserBlocked ? 
+                            <SafeAreaView style={styles.modalContainer}>
+                                <CustomText style={styles.blockQuestion}>Do you really want to block this user?</CustomText>
+                                <Button
+                                    mode="contained"
+                                    color="#DC143C" 
+                                    labelStyle={styles.blockText}
+                                    contentStyle={styles.blockButtonContent}
+                                    style={styles.blockButton} 
+                                    onPress={block}
+                                >
+                                    BLOCK
+                                </Button>
+                                <Button
+                                    mode="contained"
+                                    color="#808080" 
+                                    labelStyle={styles.cancelText}
+                                    contentStyle={styles.cancelButtonContent}
+                                    style={styles.cancelButton}  
+                                    onPress={hideModal}
+                                >
+                                    CANCEL
+                                </Button>
+                            </SafeAreaView>
+                            :
+                            <SafeAreaView style={styles.modalContainer}>
+                                <CustomText style={styles.blockQuestion}>Do you really want to lift the block?</CustomText>
+                                <Button
+                                    mode="contained"
+                                    color="#9ACD32" 
+                                    labelStyle={styles.blockText}
+                                    contentStyle={styles.blockButtonContent}
+                                    style={styles.blockButton} 
+                                    onPress={unblock}
+                                >
+                                    UNBLOCK
+                                </Button>
+                                <Button
+                                    mode="contained"
+                                    color="#808080" 
+                                    labelStyle={styles.cancelText}
+                                    contentStyle={styles.cancelButtonContent}
+                                    style={styles.cancelButton}  
+                                    onPress={hideModal}
+                                >
+                                    CANCEL
+                                </Button>
+                            </SafeAreaView>
+                        }
+                    </Modal>
                 </SafeAreaView>
             }
             showsVerticalScrollIndicator={false}
-            data={Object.values(userPosts)}
+            data={getData()}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
-            onViewableItemsChanged={onViewableItemsChanged}
-            viewabilityConfig={viewabilityConfig}
+            /* onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig} */
             ListEmptyComponent={listEmptyComponent()}
         />
     )
@@ -233,11 +346,11 @@ const styles = StyleSheet.create({
     modalContainer: {
         height: '28%',
         width: '100%',
-        backgroundColor: '#333',
-        alignItems: 'stretch',
-        justifyContent: 'space-between',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
+        backgroundColor: '#3b3b3b',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5
     },
     touchableOpacity: {
         alignItems: 'center',
@@ -317,7 +430,30 @@ const styles = StyleSheet.create({
     notFoundIcon: {
         height: 250,
         width: 307
+    },
+    blockButton: {
+        marginTop: '12%',
+        marginBottom: '3%',
+        width: '65%'
+    },
+    blockText: {
+        fontWeight: 'bold',
+        fontSize: responsiveScreenFontSize(2.1),
+    },
+    blockQuestion: {
+        color: 'white',
+        fontSize: responsiveScreenFontSize(2.1),
+        fontWeight: 'bold',
+        marginTop: '8%'
+    },
+    cancelButton: {
+        width: '65%',
+        marginBottom: '8%'
+    },
+    cancelText: {
+        fontWeight: 'bold',
+        fontSize: responsiveScreenFontSize(2.1)
     }
 })
 
-export default connect(null, { loadProfile })(ProfileScreen)
+export default connect(null, { loadProfile, blockUser, unblockUser })(ProfileScreen)

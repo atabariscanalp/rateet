@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { posts, postDetail } from './posts'
-import { users, profile, ui } from './users'
+import { users, profile, ui, blockedUsers } from './users'
 import auth from './auth'
 
 export default combineReducers({
@@ -9,5 +9,6 @@ export default combineReducers({
     auth,
     users,
     profile,
-    ui
+    ui,
+    blockedUsers
 })

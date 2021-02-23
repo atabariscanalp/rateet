@@ -3,7 +3,7 @@ import { useTheme } from '@react-navigation/native'
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector } from 'react-redux'
-import { getCommentsFetchingInfo, getCommentUploadInfo, getPostCommentsByIdInfo } from '../src/constants/selector'
+import { getBlockedUsersInfo, getCommentsFetchingInfo, getCommentUploadInfo, getPostCommentsByIdInfo } from '../src/constants/selector'
 
 import Comment from '../src/components/Comment'
 import CommentForm from '../src/components/CommentForm'
@@ -17,6 +17,7 @@ export default function CommentDetailScreen({route, navigation}) {
     const comments = useSelector(state => getPostCommentsByIdInfo(state, postId))
     const addedComment = useSelector(getCommentUploadInfo)
     const commentsFetching = useSelector(getCommentsFetchingInfo)
+    const blockedUsers = useSelector(getBlockedUsersInfo)
     //STATES
     const [parentId, setParentId] = useState(0)
     //VARIABLES
@@ -41,6 +42,7 @@ export default function CommentDetailScreen({route, navigation}) {
     const scrollToEnd = () => {
         if (ref.current) ref.current.scrollToEnd()
     }
+    
 
     /* const scrollToComment = useCallback((commentId) => {
         if (ref !== null && ref.current !== null && !commentsFetching) {
@@ -70,8 +72,21 @@ export default function CommentDetailScreen({route, navigation}) {
 
     useEffect(() => {
         if (addedComment) scrollToEnd()
+
+        const doesArrayContains = (prop) => {
+            blockedUsers.map(id => {
+                if (prop === id)
+                    return true
+            })
+            return false
+        }
+
+        commentData.map((val, ind) => {
+            if (doesArrayContains(val.author.pk))
+                commentData.splice(ind, 1)
+        })
         
-    }, [addedComment, commentData, commentId, comments, commentsFetching])
+    }, [addedComment, blockedUsers, commentData, commentId, comments, commentsFetching])
 
     return (
         <SafeAreaView style={styles.commentContainer}>

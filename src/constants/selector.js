@@ -29,6 +29,8 @@ const getProfileSelector = state => state.profile
 
 const getUISelector = state => state.ui
 
+const getBlockedUsersSelector = state => state.blockedUsers
+
 
 export const getAuthenticatedUser = createSelector(
     [getAuthenticationSelector],
@@ -192,6 +194,11 @@ export const getProfilePostsInfo = createSelector(
     profile => profile.posts
 )
 
+export const getUserBlockedInfo = createSelector(
+    [getProfileSelector],
+    profile => profile.isBlocked
+)
+
 export const getPreferredLanguageInfo = createSelector(
     [getAuthenticationSelector],
     auth => {
@@ -205,4 +212,9 @@ export const getPreferredLanguageInfo = createSelector(
 export const getIsDarkThemeInfo = createSelector(
     [getUISelector],
     ui => ui.isDark
+)
+
+export const getBlockedUsersInfo = createSelector(
+    [getBlockedUsersSelector],
+    blockedUsers => blockedUsers
 )

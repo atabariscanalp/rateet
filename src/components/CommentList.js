@@ -6,11 +6,15 @@ import Comment from './Comment'
 import { CustomText } from '../../shared/components'
 import languages from '../languages/Languages'
 import { responsiveScreenFontSize } from 'react-native-responsive-dimensions'
+import { useSelector } from 'react-redux'
+import { getBlockedUsersInfo } from '../constants/selector'
 
 export default function CommentList({comments, postId, navigation}) {
 
     //THEME
     const { colors } = useTheme()
+    //SELECTORS
+    const blockedUsers = useSelector(getBlockedUsersInfo)
     //VARIABLES
     let noReply = true
     const inCommentDetailScreen = false
@@ -18,6 +22,13 @@ export default function CommentList({comments, postId, navigation}) {
     const moreCommentsStyle = {fontWeight: 'bold', alignSelf: 'center', marginTop: '4%', color: colors.comment, fontSize: responsiveScreenFontSize(1.6)}
     //METHODS
     const navigateToComments = () => navigation.navigate('CommentDetail', {postId: postId})
+    const doesArrayContains = (prop) => {
+        blockedUsers.map(id => {
+            if (prop === id)
+                return true
+        })
+        return false
+    }
 
     for (var i = 0; i < commentCount; i++)
     {
@@ -32,15 +43,18 @@ export default function CommentList({comments, postId, navigation}) {
     if (commentCount <= 3){
         return (
             <SafeAreaView>
-                {Object.values(comments).map((comment) => (
-                    <Comment 
-                        comment={comment} 
-                        postId={postId} 
-                        key={comment.id} 
-                        navigation={navigation} 
-                        inCommentDetailScreen={inCommentDetailScreen}
-                    />
-                ))}
+                {Object.values(comments).map((comment) => {
+                    doesArrayContains(comment.author.pk) ? 
+                        null
+                    :
+                        <Comment 
+                            comment={comment} 
+                            postId={postId} 
+                            key={comment.id} 
+                            navigation={navigation} 
+                            inCommentDetailScreen={inCommentDetailScreen}
+                        />
+                })}
             {noReply ? null : 
             <TouchableOpacity onPress={navigateToComments}>
                 <CustomText style={moreCommentsStyle}>{languages.seeMoreComments}</CustomText>
@@ -53,15 +67,18 @@ export default function CommentList({comments, postId, navigation}) {
             <SafeAreaView>
                 {Object.entries(comments).map(([key, comment], index) => {
                     if (index <= 2){
-                        return (
-                            <Comment 
-                                comment={comment} 
-                                postId={postId} 
-                                key={comment.id} 
-                                navigation={navigation}
-                                inCommentDetailScreen={inCommentDetailScreen}
-                            />
-                        )
+                        if (!doesArrayContains(comment.author.pk))
+                            return (
+                                <Comment 
+                                    comment={comment} 
+                                    postId={postId} 
+                                    key={comment.id} 
+                                    navigation={navigation}
+                                    inCommentDetailScreen={inCommentDetailScreen}
+                                />
+                            )
+                        else
+                            return null
                     }
                 })}
                 <TouchableOpacity onPress={navigateToComments}>

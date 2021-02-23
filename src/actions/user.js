@@ -23,7 +23,13 @@ import {
     DELETE_DEVICE_FAIL,
     UPDATE_LANGUAGE_SUCCESS,
     UPDATE_LANGUAGE_FAIL,
-    THEME_CHANGED_SUCCESS} from '../constants/index'
+    THEME_CHANGED_SUCCESS,
+    BLOCK_USER_SUCCESS,
+    UNBLOCK_USER_SUCCESS,
+    GET_BLOCKED_USERS_SUCCESS,
+    GET_BLOCKED_USERS_FAIL,
+    BLOCK_USER_FAIL,
+    UNBLOCK_USER_FAIL} from '../constants/index'
 
 
 //UPLOAD PROFILE PHOTO
@@ -233,4 +239,82 @@ export const changePrefferedLanguage = (language) => dispatch => {
 export const changeTheme = () => dispatch => {
 
     dispatch({ type: THEME_CHANGED_SUCCESS })
+}
+
+export const getBlockedUsers = () => dispatch => {
+
+    const config = {
+        headers: 
+        {
+            'Content-type': 'application/json',
+        },
+        withCredentials: true
+    }
+
+    axios.get(`${FETCH_URL}/api/v1/user/blocked_users/`, config)
+    .then((res) => {
+        dispatch({
+            type: GET_BLOCKED_USERS_SUCCESS,
+            payload: res.data
+        })
+    }).catch(err => {
+        console.log(err)
+        dispatch({
+            type: GET_BLOCKED_USERS_FAIL
+        })
+    })
+}
+
+export const blockUser = (userId) => dispatch => {
+
+    const config = {
+        headers: 
+        {
+            'Content-type': 'application/json',
+        },
+        withCredentials: true
+    }
+
+    const body = JSON.stringify({ blocked_user: userId })
+
+    axios.post(`${FETCH_URL}/api/v1/user/block/${userId}`, body, config)
+    .then(() => {
+        dispatch({ 
+            type: BLOCK_USER_SUCCESS,
+            userId
+        })
+    }).catch(err => {
+        console.log(err)
+        dispatch({
+            type: BLOCK_USER_FAIL
+        })
+    })
+
+    
+}
+
+export const unblockUser = (userId) => dispatch => {
+
+
+    const config = {
+        headers: 
+        {
+            'Content-type': 'application/json',
+        },
+        withCredentials: true
+    }
+
+    axios.delete(`${FETCH_URL}/api/v1/user/unblock/${userId}`, config)
+    .then(() => {
+        dispatch({ 
+            type: UNBLOCK_USER_SUCCESS,
+            userId
+        })
+    }).catch(err => {
+        console.log(err)
+        dispatch({
+            type: UNBLOCK_USER_FAIL
+        })
+    })
+
 }

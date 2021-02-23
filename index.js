@@ -1,3 +1,4 @@
+//import './wdyr'
 import 'react-native-gesture-handler'
         
 import './src/actions/interceptors'
@@ -9,7 +10,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 import App from './App'
 import messaging from '@react-native-firebase/messaging'
 
-import Splash from './screens/SplashScreen'
 import {store, persistor} from './store'
 
 
