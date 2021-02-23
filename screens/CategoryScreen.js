@@ -4,7 +4,7 @@ import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import { ActivityIndicator, SafeAreaView, StatusBar, StyleSheet } from 'react-native'
 
 
-import { getFetchingInfo, getNextPageUrlInfo, getPageInfo, getPostsByCategoryInfo } from '../src/constants/selector'
+import { getBlockedUsersInfo, getFetchingInfo, getNextPageUrlInfo, getPageInfo, getPostsByCategoryInfo } from '../src/constants/selector'
 import { fetchingNewCategory, getMorePostsCategory, getPostsByCategory, incrementPage } from '../src/actions/posts'
 import { shallowEqual } from '../src/constants/context'
 import Card from '../src/components/Card'
@@ -195,11 +195,25 @@ export class CategoryScreen extends React.Component {
         else return 'dark-content'
     }
 
+    doesArrayContains = (prop) => {
+        const { blockedUsers } = this.props
+        blockedUsers.map(id => {
+            if (prop === id)
+                return true
+        })
+        return false
+    }
+
     render(){
         const { posts } = this.props
         const { isRefreshing } = this.state
 
         const postsData = Object.values(posts)
+
+        postsData.map((val, ind) => {
+            if (this.doesArrayContains(val.author.pk))
+                postsData.splice(ind, 1)
+        })
 
         return (
             <SafeAreaView style={styles.container}>
@@ -247,7 +261,8 @@ const mapStateToProps = state => {
         page: getPageInfo(state),
         fetching: getFetchingInfo(state),
         nextPageUrl: getNextPageUrlInfo(state),
-        posts: getPostsByCategoryInfo(state)
+        posts: getPostsByCategoryInfo(state),
+        blockedUsers: getBlockedUsersInfo(state)
     }
 }
 
