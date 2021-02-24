@@ -99,6 +99,7 @@ export const logout = () => dispatch => {
         /* axios.get() */ //?
 
         await SInfo.deleteItem('refresh_token', {}) //also delete refresh token to prevent login automatically if not logged in as another user
+        await SInfo.deleteItem('access_token', {}) //also delete refresh token to prevent login automatically if not logged in as another user
     
         axios.post(`${FETCH_URL}/auth/logout/`, config)
             .then(() => {

@@ -74,10 +74,14 @@ export default function CommentDetailScreen({route, navigation}) {
         if (addedComment) scrollToEnd()
 
         const doesArrayContains = (prop) => {
+            let found = false
             blockedUsers.map(id => {
-                if (prop === id)
-                    return true
+                if (prop === id) {
+                    found = true
+                }
             })
+            if (found)
+                return true
             return false
         }
 

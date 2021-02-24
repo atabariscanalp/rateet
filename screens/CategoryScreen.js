@@ -197,10 +197,14 @@ export class CategoryScreen extends React.Component {
 
     doesArrayContains = (prop) => {
         const { blockedUsers } = this.props
+        let found = false
         blockedUsers.map(id => {
-            if (prop === id)
-                return true
+            if (prop === id) {
+                found = true
+            }
         })
+        if (found)
+            return true
         return false
     }
 

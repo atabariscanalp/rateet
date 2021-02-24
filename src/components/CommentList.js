@@ -23,10 +23,14 @@ export default function CommentList({comments, postId, navigation}) {
     //METHODS
     const navigateToComments = () => navigation.navigate('CommentDetail', {postId: postId})
     const doesArrayContains = (prop) => {
+        let found = false
         blockedUsers.map(id => {
-            if (prop === id)
-                return true
+            if (prop === id) {
+                found = true
+            }
         })
+        if (found)
+            return true
         return false
     }
 
@@ -44,22 +48,23 @@ export default function CommentList({comments, postId, navigation}) {
         return (
             <SafeAreaView>
                 {Object.values(comments).map((comment) => {
-                    doesArrayContains(comment.author.pk) ? 
-                        null
-                    :
+                    if (doesArrayContains(comment.author.pk))  
+                        return null
+                    return (
                         <Comment 
-                            comment={comment} 
-                            postId={postId} 
-                            key={comment.id} 
-                            navigation={navigation} 
-                            inCommentDetailScreen={inCommentDetailScreen}
+                        comment={comment} 
+                        postId={postId} 
+                        key={comment.id} 
+                        navigation={navigation} 
+                        inCommentDetailScreen={inCommentDetailScreen}
                         />
+                    )
                 })}
-            {noReply ? null : 
-            <TouchableOpacity onPress={navigateToComments}>
-                <CustomText style={moreCommentsStyle}>{languages.seeMoreComments}</CustomText>
-            </TouchableOpacity>
-            }
+                {noReply ? null : 
+                <TouchableOpacity onPress={navigateToComments}>
+                    <CustomText style={moreCommentsStyle}>{languages.seeMoreComments}</CustomText>
+                </TouchableOpacity>
+                }
             </SafeAreaView>
         )
     } else {
@@ -68,15 +73,17 @@ export default function CommentList({comments, postId, navigation}) {
                 {Object.entries(comments).map(([key, comment], index) => {
                     if (index <= 2){
                         if (!doesArrayContains(comment.author.pk))
+                        {
                             return (
                                 <Comment 
-                                    comment={comment} 
-                                    postId={postId} 
-                                    key={comment.id} 
-                                    navigation={navigation}
-                                    inCommentDetailScreen={inCommentDetailScreen}
+                                comment={comment} 
+                                postId={postId} 
+                                key={comment.id} 
+                                navigation={navigation}
+                                inCommentDetailScreen={inCommentDetailScreen}
                                 />
-                            )
+                                )
+                        }
                         else
                             return null
                     }

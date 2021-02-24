@@ -46,6 +46,9 @@ export class HomeScreen extends React.Component {
         //IS_REFRESHING
         if (this.state.isRefreshing !== nextState.isRefreshing)
             return true
+        //BLOCKED_USERS
+        if (!shallowEqual(this.props.blockedUsers, nextProps.blockedUsers))
+            return true
 
         return false
     }
@@ -152,10 +155,14 @@ export class HomeScreen extends React.Component {
 
     doesArrayContains = (prop) => {
         const { blockedUsers } = this.props
+        let found = false
         blockedUsers.map(id => {
-            if (prop === id)
-                return true
+            if (prop === id) {
+                found = true
+            }
         })
+        if (found)
+            return true
         return false
     }
 
@@ -164,9 +171,15 @@ export class HomeScreen extends React.Component {
         const { colors, scrollRef } = this.props.route.params
         const { posts, navigation } = this.props
 
-        posts.map((val, ind) => {
-            if (this.doesArrayContains(val.author.pk))
-                posts.splice(ind, 1)
+        var postData = posts
+
+        Object.values(postData).map((val, ind) => {
+            if (val.author) {
+                if (this.doesArrayContains(val.author.pk))
+                {
+                    postData.splice(ind, 1)
+                }
+            }
         })
 
         console.log("HOMESCREEN RENDER! ")

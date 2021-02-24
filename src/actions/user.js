@@ -295,7 +295,6 @@ export const blockUser = (userId) => dispatch => {
 
 export const unblockUser = (userId) => dispatch => {
 
-
     const config = {
         headers: 
         {

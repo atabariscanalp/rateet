@@ -47,10 +47,14 @@ export function Replies({reply, parentId, postId, rateChildComment, rateUpdateCh
     }
 
     const doesArrayContains = (prop) => {
+        let found = false
         blockedUsers.map(id => {
-            if (prop === id)
-                return true
+            if (prop === id) {
+                found = true
+            }
         })
+        if (found)
+            return true
         return false
     }
     //DYNAMIC STYLES

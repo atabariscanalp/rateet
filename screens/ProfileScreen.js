@@ -12,7 +12,7 @@ import FastImage from 'react-native-fast-image'
 import Modal from 'react-native-modal'
 
 import Card from '../src/components/Card'
-import { getAuthenticatedUser, getBlockedUsersInfo, getProfileAvgRateInfo, getProfilePostsInfo, getProfileUserInfo, getUserBlockedInfo } from '../src/constants/selector'
+import { getAuthenticatedUser, getBlockedUsersInfo, getProfileAvgRateInfo, getProfilePostsInfo, getProfileUserInfo } from '../src/constants/selector'
 import { blockUser, loadProfile, unblockUser } from '../src/actions/user'
 import { CustomText } from '../shared/components'
 import languages from '../src/languages/Languages'
