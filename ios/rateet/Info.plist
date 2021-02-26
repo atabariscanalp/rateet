@@ -53,9 +53,9 @@
 		<dict/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) need access to the camera to take a photo or video </string>
+	<string>Rateet need access to the camera to take a photo or video </string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) need access to the gallery to select a photo or video </string>
+	<string>Rateet need access to the gallery to select a photo or video </string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

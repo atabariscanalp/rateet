@@ -308,8 +308,8 @@ export function ProfileScreen({navigation, route, loadProfile, blockUser, unbloc
             data={getData()}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
-            /* onViewableItemsChanged={onViewableItemsChanged}
-            viewabilityConfig={viewabilityConfig} */
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig}
             ListEmptyComponent={listEmptyComponent()}
         />
     )

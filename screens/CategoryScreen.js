@@ -54,7 +54,10 @@ export class CategoryScreen extends React.Component {
         //CURRENT_VISIBLE_INDEX
         if (this.state.currentVisibleIndex !== nextState.currentVisibleIndex)
             return true
-        
+        //BLOCKED_USERS
+        if (!shallowEqual(this.props.blockedUsers, nextProps.blockedUsers))
+            return true
+            
         return false
     }
 
