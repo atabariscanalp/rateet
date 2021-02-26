@@ -150,6 +150,13 @@ export default {
     profileNoPost: 'şimdiye kadar herhangi bir gönderi paylaşmadı.',
     profile: 'Profil',
 
+    //ProfileScreen --> BlockUser
+    blockUserTitle: 'Bu kullanıcıyı bloklamak istiyor musunuz?',
+    blockUserButton: 'Blokla',
+    blockUserCancel: 'İptal Et',
+    unblockUserTitle: 'Kullanıcının bloğunu kaldırmak istiyor musunuz?',
+    unblockUserButton: 'Kaldır',
+
     //NotificationScreen
     noNotifications: 'Hiçbir bildiriminiz yok.',
     notifications: 'Bildirimler',

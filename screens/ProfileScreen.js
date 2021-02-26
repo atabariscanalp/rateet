@@ -254,7 +254,7 @@ export function ProfileScreen({navigation, route, loadProfile, blockUser, unbloc
                     >
                         {!isUserBlocked ? 
                             <SafeAreaView style={styles.modalContainer}>
-                                <CustomText style={styles.blockQuestion}>Do you really want to block this user?</CustomText>
+                                <CustomText style={styles.blockQuestion}>{languages.blockUserTitle}</CustomText>
                                 <Button
                                     mode="contained"
                                     color="#DC143C" 
@@ -263,7 +263,7 @@ export function ProfileScreen({navigation, route, loadProfile, blockUser, unbloc
                                     style={styles.blockButton} 
                                     onPress={block}
                                 >
-                                    BLOCK
+                                    {languages.blockUserButton}
                                 </Button>
                                 <Button
                                     mode="contained"
@@ -273,12 +273,12 @@ export function ProfileScreen({navigation, route, loadProfile, blockUser, unbloc
                                     style={styles.cancelButton}  
                                     onPress={hideModal}
                                 >
-                                    CANCEL
+                                    {languages.blockUserCancel}
                                 </Button>
                             </SafeAreaView>
                             :
                             <SafeAreaView style={styles.modalContainer}>
-                                <CustomText style={styles.blockQuestion}>Do you really want to lift the block?</CustomText>
+                                <CustomText style={styles.blockQuestion}>{languages.unblockUserTitle}</CustomText>
                                 <Button
                                     mode="contained"
                                     color="#9ACD32" 
@@ -287,7 +287,7 @@ export function ProfileScreen({navigation, route, loadProfile, blockUser, unbloc
                                     style={styles.blockButton} 
                                     onPress={unblock}
                                 >
-                                    UNBLOCK
+                                    {languages.unblockUserButton}
                                 </Button>
                                 <Button
                                     mode="contained"
@@ -297,7 +297,7 @@ export function ProfileScreen({navigation, route, loadProfile, blockUser, unbloc
                                     style={styles.cancelButton}  
                                     onPress={hideModal}
                                 >
-                                    CANCEL
+                                    {languages.blockUserCancel}
                                 </Button>
                             </SafeAreaView>
                         }

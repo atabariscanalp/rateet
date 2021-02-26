@@ -149,6 +149,13 @@ export default {
     profileNoPost: 'hasn\'t shared any post yet.',
     profile: 'Profile',
 
+    //ProfileScreen --> BlockUser
+    blockUserTitle: 'Do you really want to block this user?',
+    blockUserButton: 'Block',
+    blockUserCancel: 'Cancel',
+    unblockUserTitle: 'Do you really want to lift the block?',
+    unblockUserButton: 'UNBLOCK',
+
     //NotificationScreen
     noNotifications: 'You don\'t have got any notifications.',
     notifications: 'Notifications',
