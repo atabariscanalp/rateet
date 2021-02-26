@@ -1,5 +1,5 @@
 import React from 'react';
-import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import { BannerAd, BannerAdSize } from '@react-native-firebase/admob';
 import { Platform, SafeAreaView, StyleSheet } from 'react-native';
 
 export default function Add() {
