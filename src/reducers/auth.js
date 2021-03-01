@@ -52,7 +52,6 @@ export default function(state = initialState, action){
                 case LOGOUT_SUCCESS:
                     draft.isAuthenticated = false
                     draft.isLoading = false
-                    /* draft.user = null */
                     break
                 case REGISTER_SUCCESS:
                     draft.isAuthenticated = false

@@ -12,8 +12,6 @@ import messaging from '@react-native-firebase/messaging'
 
 import {store, persistor} from './store'
 
-
-
 // Register background handler
 messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log("remote message: ", remoteMessage)

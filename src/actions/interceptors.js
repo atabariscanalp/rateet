@@ -6,7 +6,7 @@ import { FETCH_URL } from '../constants'
 
 axios.interceptors.request.use(
     async config => {
-        //console.log("CONFIG: ", config)
+        console.log("REQUEST CONFIG: ", config)
         const token  = await SInfo.getItem('access_token', {})
         if (token && config.url !== `${FETCH_URL}/auth/login/`)
             config.headers['Authorization'] = 'Bearer ' + token
@@ -24,7 +24,7 @@ axios.interceptors.response.use(
     res => res,
     async function (err) {
         const originalRequest = err.config
-        //console.log("ERROR CONGOF: ", originalRequest)
+        console.log("ERROR CONGOF: ", originalRequest)
         if (err.response && err.response.status === 401 && !originalRequest._retry) {
             console.log("REFRESHING TOKEN!")
             originalRequest._retry = true
@@ -37,14 +37,13 @@ axios.interceptors.response.use(
                     withCredentials: true
                 }
         
-        
                 const body = JSON.stringify({ refresh: token })
                 
                 axios.post(`${FETCH_URL}/api/v1/token/refresh/`, body, config)
                     .then(res => {
                         SInfo.setItem('access_token', res.data.access, {}).then(token => {
                             console.log("resolved: ", token)
-
+                            console.log("original request: ", originalRequest)
                             axios(originalRequest)
                         })
                         SInfo.setItem('refresh_token', res.data.refresh, {})

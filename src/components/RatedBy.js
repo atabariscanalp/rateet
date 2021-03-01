@@ -30,8 +30,10 @@ export default function RatedBy({raters, setModalVisible}) {
                 {Object.entries(raters).map(([key, rater], index) => {
                     if (index <= 2){
                         return <MemoizedProfilePhoto size={20} userId={rater.user_id} key={rater.user_id}/>
-                    } else {
+                    } else if (index === 3){
                         return <CustomText style={[styles.otherText, {color: colors.ratedBy}]} key={rater.user_id} onPress={() => setModalVisible(true)}>{languages.andOthers}</CustomText>
+                    } else {
+                        return null
                     }
                 })}
             </SafeAreaView>

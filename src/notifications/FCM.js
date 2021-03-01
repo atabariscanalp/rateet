@@ -36,6 +36,7 @@ export const checkPermission = () => {
 const requestPermission = () => {
     messaging().requestPermission()
    .then(() => {
+       console.log("permission accepted")
        getToken()
    }).catch(error => {
        console.log("[FCMService] Request Permission rejected ", error)

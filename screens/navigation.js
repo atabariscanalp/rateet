@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
 import { useSelector } from 'react-redux'
 import { useTheme } from 'react-native-paper'
 import { useScrollToTop } from '@react-navigation/native'
+import RNBootSplash from "react-native-bootsplash";
+
 
 
 import { getIsAuthenticatedInfo, getIsLoadingInfo, getPostTitleInfo, getRegisterSuccessInfo } from '../src/constants/selector'
@@ -27,7 +29,6 @@ import Profile from './ProfileScreen'
 import PostDetail from './PostDetailScreen'
 import Search from './SearchScreen'
 import SignUp from './SignupScreen'
-import Splash from './SplashScreen'
 import TabNav from './TabNavigation'
 
 const Stack = createStackNavigator()
@@ -125,22 +126,18 @@ const MainStack = () => {
     const isAuthenticated = useSelector(getIsAuthenticatedInfo)
     const registerSuccess = useSelector(getRegisterSuccessInfo)
     const isLoading = useSelector(getIsLoadingInfo)
-    const [timeDone, setTimeDone] = useState(false)
 
-    useEffect(() => {        
+    useEffect(() => {       
         const timer = setTimeout(() => {
-            setTimeDone(true)
-        }, 3000)
+            if (!isLoading) {
+                RNBootSplash.hide()
+            }
+        }, 250)
         return () => {
             clearTimeout(timer)
         }
-    }, [timeDone])
+    }, [isLoading])
 
-    if (isLoading || !timeDone){
-        return (
-            <Splash />
-        )
-    }
     
     return (        
         <Stack.Navigator>
