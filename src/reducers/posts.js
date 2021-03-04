@@ -29,7 +29,8 @@ import {
     GET_MORE_POSTS_SUCCESS,
     GET_MORE_POSTS_BY_CATEGORY_SUCCESS,
     GET_COMMENTS_FOR_POST_SUCCESS,
-    GET_COMMENTS_FOR_POST_FETCHING} from '../constants/index'
+    GET_COMMENTS_FOR_POST_FETCHING,
+    MUTE_OR_UNMUTE} from '../constants/index'
 
 import { produce, enableES5 } from 'immer'
 
@@ -41,7 +42,8 @@ const initialState = {
     next: '',
     count: 0,
     fetching: false,
-    addedComment: false
+    addedComment: false,
+    muted: false
 }
 
 const compareKeys = (objA, objB) => {
@@ -257,6 +259,9 @@ export function posts(state = initialState, action){
                         draft.postsByCategory[`p-${postId}`].comments[parentId].replies[commentId].avg_rate = (draft.postsByCategory[`p-${postId}`].comments[parentId].replies[commentId].avg_rate * draft.postsByCategory[`p-${postId}`].comments[parentId].replies[commentId].rate_count - draft.postsByCategory[`p-${postId}`].comments[parentId].replies[commentId].rated_by[userId].rate + rate) / (draft.postsByCategory[`p-${postId}`].comments[parentId].replies[commentId].rate_count)
                         draft.postsByCategory[`p-${postId}`].comments[parentId].replies[commentId].rated_by[userId].rate = rate
                     }
+                    break
+                case MUTE_OR_UNMUTE:
+                    draft.muted = !draft.muted
                     break
                 case ADD_COMMENT_FAIL:
                 case DELETE_COMMENT_FAIL:

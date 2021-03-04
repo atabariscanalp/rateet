@@ -2,7 +2,6 @@ import axios from 'axios'
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN' 
 
-import SInfo from 'react-native-sensitive-info'
 import { 
         GET_POSTS,
         GET_POSTS_BY_CATEGORY,
@@ -49,7 +48,8 @@ import {
         GET_COMMENTS_FOR_POST_SUCCESS,
         GET_COMMENTS_FOR_POST_FAIL,
         REPORT_POST_SUCCESS,
-        REPORT_POST_FAIL} from '../constants/index'
+        REPORT_POST_FAIL,
+        MUTE_OR_UNMUTE} from '../constants/index'
 
         
 //GET POSTS
@@ -594,4 +594,8 @@ export const incrementPage = () => dispatch => {
 
 export const fetchingNewCategory = () => dispatch => {
     dispatch({ type: FETCHING_NEW_CATEGORY })
+}
+
+export const muteVideos = () => dispatch => {
+    dispatch({ type: MUTE_OR_UNMUTE })
 }

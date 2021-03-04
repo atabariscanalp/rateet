@@ -134,6 +134,11 @@ export const getCommentUploadInfo = createSelector(
     posts => posts.addedComment
 )
 
+export const getMutedInfo = createSelector(
+    [getPostsSelector],
+    posts => posts.muted
+)
+
 export const getPostDetailInfo = createSelector(
     [getPostDetailSelector],
     post => post
