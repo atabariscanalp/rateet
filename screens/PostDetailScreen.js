@@ -18,7 +18,6 @@ export function PostDetailScreen({route, navigation, getPostDetail}) {
     const postData = [post]
 
     
-
 	const cellRefs = useMemo(() => {
         return {}
     }, [])

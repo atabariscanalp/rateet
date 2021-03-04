@@ -166,7 +166,9 @@ const RootStack = () => {
 const PostDetailStack = ({ route }) => {
     
     const postId = route?.params?.postId
-    const postTitle = useSelector(state => getPostTitleInfo(state, postId))
+    var postTitle = useSelector(state => getPostTitleInfo(state, postId))
+    if (route.params.params.postTitle) 
+        postTitle = route.params.params.postTitle
 
     return (
         <Stack.Navigator initialRouteName="PostDetail" screenOptions={{cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}>
