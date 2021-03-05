@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
-import { ActivityIndicator, SafeAreaView, StatusBar, StyleSheet } from 'react-native'
+import { ActivityIndicator, RefreshControl, SafeAreaView, StatusBar, StyleSheet } from 'react-native'
 
 
 import { getBlockedUsersInfo, getFetchingInfo, getNextPageUrlInfo, getPageInfo, getPostsByCategoryInfo } from '../src/constants/selector'
@@ -211,9 +211,19 @@ export class CategoryScreen extends React.Component {
         return false
     }
 
+    refreshControl = () => {
+        const { isRefreshing } = this.state
+        return (
+            <RefreshControl 
+                onRefresh={this.refresh}
+                refreshing={isRefreshing}
+                tintColor="grey"
+            />
+        )
+    }
+
     render(){
         const { posts } = this.props
-        const { isRefreshing } = this.state
 
         const postsData = Object.values(posts)
 
@@ -232,8 +242,7 @@ export class CategoryScreen extends React.Component {
                     style={this.backgroundStyle()}
                     onViewableItemsChanged={this.onViewableItemsChanged}
                     viewabilityConfig={this.viewabilityConfig}
-                    onRefresh={this.refresh}
-                    refreshing={isRefreshing}
+                    refreshControl={this.refreshControl()}
                     onEndReachedThreshold={2}
                     onEndReached={this.onEndReached}
                     showsVerticalScrollIndicator={false}

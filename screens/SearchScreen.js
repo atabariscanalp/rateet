@@ -10,6 +10,21 @@ import { useTheme } from '@react-navigation/native'
 import { FETCH_URL } from '../src/constants'
 import { CustomText } from '../shared/components'
 import languages from '../src/languages/Languages'
+import { 
+    foodsIcon,
+    gamesIcon,
+    carsIcon,
+    memesIcon,
+    landscapeIcon,
+    artIcon,
+    booksIcon,
+    fashionIcon,
+    moviesIcon,
+    sportIcon,
+    catIcon,
+    tiktokIcon,
+    musicIcon
+} from '../src/constants/index'
 
 export default function SearchScreen({navigation, route}) {
 
@@ -33,16 +48,19 @@ export default function SearchScreen({navigation, route}) {
     //VARIABLES
     var typing = false
     
-    const booksImg = require('../assets/icons/books-512.png')
-    const moviesImg = require('../assets/icons/popcorn-512.png')
-    const carsImg = require('../assets/icons/f1-512.png')
-    const gamesImg = require('../assets/icons/gameconsole-512.png')
-    const fashionImg = require('../assets/icons/handbag-512.png')
-    const foodsImg = require('../assets/icons/veganfood-512.png')
-    const sportImg = require('../assets/icons/ball-512.png')
-    const artImg = require('../assets/icons/statue-512.png')
-    const landscapeImg = require('../assets/icons/mountain-512.png')
-    const memesImg = require('../assets/icons/humor-512.png')
+    const booksImg = booksIcon
+    const moviesImg = moviesIcon
+    const carsImg = carsIcon
+    const gamesImg = gamesIcon
+    const fashionImg = fashionIcon
+    const foodsImg = foodsIcon
+    const sportImg = sportIcon
+    const artImg = artIcon
+    const landscapeImg = landscapeIcon
+    const memesImg = memesIcon
+    const animalsImg = catIcon
+    const tiktokImg = tiktokIcon
+    const musicImg = musicIcon
 
     const inputStyle = {fontWeight: 'normal', color: colors.searchScreenText}
     //METHODS
@@ -102,6 +120,9 @@ export default function SearchScreen({navigation, route}) {
         else if (res.category === 'Fashion') return '#ffc0cb'
         else if (res.category === 'Foods') return 'red'
         else if (res.category === 'Memes') return '#ffdab9'
+        else if (res.category === 'Animals') return '#5f9ea0'
+        else if (res.category === 'TikTok') return '#1e90ff'
+        else if (res.category === 'Music') return '#dda0dd'
     }
 
     const translateCategory = res => {
@@ -115,6 +136,9 @@ export default function SearchScreen({navigation, route}) {
         else if (res.category === 'Fashion') return languages.fashion
         else if (res.category === 'Foods') return languages.foods
         else if (res.category === 'Memes') return languages.memes
+        else if (res.category === 'Animals') return languages.animals
+        else if (res.category === 'TikTok') return languages.tiktok
+        else if (res.category === 'Music') return languages.music
     }
 
     const navigateToPostDetail = (res) => navigation.navigate('PostDetail', { screen: 'PostDetail', params: { postId: res.id, postTitle: res.title } })
@@ -134,6 +158,9 @@ export default function SearchScreen({navigation, route}) {
     const getArt = () => {setText(languages.art + ':'); setPressed(true); getPostsByCategory('art', '')}
     const getMemes = () => {setText(languages.memes + ':'); setPressed(true); getPostsByCategory('memes', '')}
     const getLandscape = () => {setText(languages.landscape + ':'); setPressed(true); getPostsByCategory('landscape', '')}
+    const getAnimals = () => {setText(languages.animals + ':'); setPressed(true); getPostsByCategory('animals', '')}
+    const getTikTok = () => {setText(languages.tiktok + ':'); setPressed(true); getPostsByCategory('tiktok', '')}
+    const getMusic = () => {setText(languages.music + ':'); setPressed(true); getPostsByCategory('music', '')}
 
     return (
         <SafeAreaView style={styles.container}>
@@ -176,14 +203,6 @@ export default function SearchScreen({navigation, route}) {
                     </ScrollView>
                 :
                     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-                        <TouchableOpacity onPress={getBooks} style={[styles.categoryContainer, {backgroundColor: '#e2c18b'}]}>
-                            <CustomText style={styles.categoryTitle}>{languages.books}</CustomText>
-                            <Image source={booksImg} style={styles.image}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={getMemes} style={[styles.categoryContainer, {backgroundColor: '#ffdab9'}]}>
-                            <CustomText style={styles.categoryTitle}>{languages.memes}</CustomText>
-                            <Image source={memesImg} style={styles.image}/>
-                        </TouchableOpacity>
                         <TouchableOpacity onPress={getMovies} style={[styles.categoryContainer, {backgroundColor: '#B0E0E6'}]}>
                             <CustomText style={styles.categoryTitle}>{languages.movies}</CustomText>
                             <Image source={moviesImg} style={styles.image}/>
@@ -192,21 +211,41 @@ export default function SearchScreen({navigation, route}) {
                             <CustomText style={styles.categoryTitle}>{languages.sport}</CustomText>
                             <Image source={sportImg} style={styles.image}/>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={getCars} style={[styles.categoryContainer, {backgroundColor: '#2929a3'}]}>
-                            <CustomText style={styles.categoryTitle}>{languages.cars}</CustomText>
-                            <Image source={carsImg} style={styles.image}/>
+                        <TouchableOpacity onPress={getTikTok} style={[styles.categoryContainer, {backgroundColor: '#1e90ff'}]}>
+                            <CustomText style={styles.categoryTitle}>{languages.tiktok}</CustomText>
+                            <Image source={tiktokImg} style={styles.image}/>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={getGames} style={[styles.categoryContainer, {backgroundColor: '#ee9a00'}]}>
                             <CustomText style={styles.categoryTitle}>{languages.games}</CustomText>
                             <Image source={gamesImg} style={styles.image}/>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={getMemes} style={[styles.categoryContainer, {backgroundColor: '#ffdab9'}]}>
+                            <CustomText style={styles.categoryTitle}>{languages.memes}</CustomText>
+                            <Image source={memesImg} style={styles.image}/>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={getFashion} style={[styles.categoryContainer, {backgroundColor: '#ffc0cb'}]}>
                             <CustomText style={styles.categoryTitle}>{languages.fashion}</CustomText>
                             <Image source={fashionImg} style={styles.image}/>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={getMusic} style={[styles.categoryContainer, {backgroundColor: '#dda0dd'}]}>
+                            <CustomText style={styles.categoryTitle}>{languages.music}</CustomText>
+                            <Image source={musicImg} style={styles.image}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={getAnimals} style={[styles.categoryContainer, {backgroundColor: '#5f9ea0'}]}>
+                            <CustomText style={styles.categoryTitle}>{languages.animals}</CustomText>
+                            <Image source={animalsImg} style={styles.image}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={getCars} style={[styles.categoryContainer, {backgroundColor: '#2929a3'}]}>
+                            <CustomText style={styles.categoryTitle}>{languages.cars}</CustomText>
+                            <Image source={carsImg} style={styles.image}/>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={getFoods} style={[styles.categoryContainer, {backgroundColor: 'red'}]}>
                             <CustomText style={styles.categoryTitle}>{languages.foods}</CustomText>
                             <Image source={foodsImg} style={styles.image}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={getBooks} style={[styles.categoryContainer, {backgroundColor: '#e2c18b'}]}>
+                            <CustomText style={styles.categoryTitle}>{languages.books}</CustomText>
+                            <Image source={booksImg} style={styles.image}/>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={getArt} style={[styles.categoryContainer, {backgroundColor: '#c2c2c2'}]}>
                             <CustomText style={styles.categoryTitle}>{languages.art}</CustomText>

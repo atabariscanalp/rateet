@@ -19,6 +19,21 @@ import { CustomText } from '../shared/components'
 import languages from '../src/languages/Languages'
 import { changeTheme, deleteDevice } from '../src/actions/user'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { 
+    foodsIcon,
+    gamesIcon,
+    carsIcon,
+    memesIcon,
+    landscapeIcon,
+    artIcon,
+    booksIcon,
+    fashionIcon,
+    moviesIcon,
+    sportIcon,
+    catIcon,
+    tiktokIcon,
+    musicIcon
+} from '../src/constants/index'
 
 const DrawerNav = createDrawerNavigator()
 
@@ -50,16 +65,19 @@ const DrawerNavigator = ({deleteDevice, logout, navigation, changeTheme}) => {
         logout()
     }
 
-    const getFashionIcon = () => <Image style={styles.icon} source={require('../assets/icons/handbag-512.png')}/>
-    const getBooksIcon = () => <Image style={styles.icon} source={require('../assets/icons/books-512.png')}/>
-    const getSportIcon = () => <Image style={styles.icon} source={require('../assets/icons/ball-512.png')}/>
-    const getGamesIcon = () => <Image style={styles.icon} source={require('../assets/icons/gameconsole-512.png')}/>
-    const getArtIcon = () => <Image style={styles.icon} source={require('../assets/icons/statue-512.png')}/>
-    const getMemesIcon = () => <Image style={styles.icon} source={require('../assets/icons/humor-512.png')}/>
-    const getMoviesIcon = () => <Image style={styles.icon} source={require('../assets/icons/popcorn-512.png')}/>
-    const getCarsIcon = () => <Image style={styles.icon} source={require('../assets/icons/f1-512.png')}/>
-    const getLandscapeIcon = () => <Image style={styles.icon} source={require('../assets/icons/mountain-512.png')}/>
-    const getFoodsIcon = () => <Image style={styles.icon} source={require('../assets/icons/veganfood-512.png')}/>
+    const getFashionIcon = () => <Image style={styles.icon} source={fashionIcon}/>
+    const getBooksIcon = () => <Image style={styles.icon} source={booksIcon}/>
+    const getSportIcon = () => <Image style={styles.icon} source={sportIcon}/>
+    const getGamesIcon = () => <Image style={styles.icon} source={gamesIcon}/>
+    const getArtIcon = () => <Image style={styles.icon} source={artIcon}/>
+    const getMemesIcon = () => <Image style={styles.icon} source={memesIcon}/>
+    const getMoviesIcon = () => <Image style={styles.icon} source={moviesIcon}/>
+    const getCarsIcon = () => <Image style={styles.icon} source={carsIcon}/>
+    const getLandscapeIcon = () => <Image style={styles.icon} source={landscapeIcon}/>
+    const getFoodsIcon = () => <Image style={styles.icon} source={foodsIcon}/>
+    const getAnimalsIcon = () => <Image style={styles.icon} source={catIcon}/>
+    const getTikTokIcon = () => <Image style={styles.icon} source={tiktokIcon}/>
+    const getMusicIcon = () => <Image style={styles.icon} source={musicIcon}/>
 
     const getFashionLabel = () => <CustomText style={[styles.drawerLabel,{color: colors.drawernavText}]}>{languages.fashion}</CustomText>
     const getBooksLabel = () => <CustomText style={[styles.drawerLabel,{color: colors.drawernavText}]}>{languages.books}</CustomText>
@@ -71,6 +89,9 @@ const DrawerNavigator = ({deleteDevice, logout, navigation, changeTheme}) => {
     const getCarsLabel = () => <CustomText style={[styles.drawerLabel,{color: colors.drawernavText}]}>{languages.cars}</CustomText>
     const getLandscapeLabel = () => <CustomText style={[styles.drawerLabel,{color: colors.drawernavText}]}>{languages.landscape}</CustomText>
     const getFoodsLabel = () => <CustomText style={[styles.drawerLabel,{color: colors.drawernavText}]}>{languages.foods}</CustomText>
+    const getAnimalsLabel = () => <CustomText style={[styles.drawerLabel,{color: colors.drawernavText}]}>{languages.animals}</CustomText>
+    const getTikTokLabel = () => <CustomText style={[styles.drawerLabel,{color: colors.drawernavText}]}>{languages.tiktok}</CustomText>
+    const getMusicLabel = () => <CustomText style={[styles.drawerLabel,{color: colors.drawernavText}]}>{languages.music}</CustomText>
 
     const navigateToFashion = () => navigation.navigate('Fashion', {category: 'fashion'})
     const navigateToBooks = () => navigation.navigate('Books', {category: 'books'})
@@ -82,6 +103,9 @@ const DrawerNavigator = ({deleteDevice, logout, navigation, changeTheme}) => {
     const navigateToCars = () => navigation.navigate('Cars', {category: 'cars'})
     const navigateToLandscape = () => navigation.navigate('Landscape', {category: 'landscape'})
     const navigateToFoods = () => navigation.navigate('Foods', {category: 'foods'})
+    const navigateToAnimals = () => navigation.navigate('Animals', {category: 'animals'})
+    const navigateToTikTok = () => navigation.navigate('TikTok', {category: 'tiktok'})
+    const navigateToMusic = () => navigation.navigate('Music', {category: 'music'})
 
     const DrawerContent = (props) => {
         return (
@@ -106,9 +130,19 @@ const DrawerNavigator = ({deleteDevice, logout, navigation, changeTheme}) => {
                                 onPress={navigateToFashion}
                             />
                             <DrawerItem 
+                                icon={getSportIcon}
+                                label={getSportLabel}
+                                onPress={navigateToSport}
+                            />
+                            <DrawerItem 
                                 icon={getMoviesIcon}
                                 label={getMoviesLabel}
                                 onPress={navigateToMovies}
+                            />
+                            <DrawerItem 
+                                icon={getTikTokIcon}
+                                label={getTikTokLabel}
+                                onPress={navigateToTikTok}
                             />
                             <DrawerItem 
                                 icon={getGamesIcon}
@@ -121,9 +155,14 @@ const DrawerNavigator = ({deleteDevice, logout, navigation, changeTheme}) => {
                                 onPress={navigateToMemes}
                             />
                             <DrawerItem 
-                                icon={getSportIcon}
-                                label={getSportLabel}
-                                onPress={navigateToSport}
+                                icon={getAnimalsIcon}
+                                label={getAnimalsLabel}
+                                onPress={navigateToAnimals}
+                            />
+                            <DrawerItem 
+                                icon={getMusicIcon}
+                                label={getMusicLabel}
+                                onPress={navigateToMusic}
                             />
                             <DrawerItem 
                                 icon={getCarsIcon}
@@ -189,6 +228,9 @@ const DrawerNavigator = ({deleteDevice, logout, navigation, changeTheme}) => {
             <DrawerNav.Screen name="Cars" component={CategoryStack}/>
             <DrawerNav.Screen name="Landscape" component={CategoryStack}/>
             <DrawerNav.Screen name="Foods" component={CategoryStack}/>
+            <DrawerNav.Screen name="Animals" component={CategoryStack}/>
+            <DrawerNav.Screen name="TikTok" component={CategoryStack}/>
+            <DrawerNav.Screen name="Music" component={CategoryStack}/>
         </DrawerNav.Navigator>
     )
     

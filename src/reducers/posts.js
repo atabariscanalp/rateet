@@ -30,7 +30,8 @@ import {
     GET_MORE_POSTS_BY_CATEGORY_SUCCESS,
     GET_COMMENTS_FOR_POST_SUCCESS,
     GET_COMMENTS_FOR_POST_FETCHING,
-    MUTE_OR_UNMUTE} from '../constants/index'
+    MUTE_OR_UNMUTE,
+    ADD_POST_FAIL} from '../constants/index'
 
 import { produce, enableES5 } from 'immer'
 
@@ -43,7 +44,8 @@ const initialState = {
     count: 0,
     fetching: false,
     addedComment: false,
-    muted: false
+    muted: false,
+    postUploadError: false
 }
 
 const compareKeys = (objA, objB) => {
@@ -161,10 +163,15 @@ export function posts(state = initialState, action){
                     break
                 case ADDING_POST:
                     draft.addingPost = true
+                    draft.postUploadError = false
                     break
                 case ADD_POST:
                     var newPost = {[`p-${action.payload.id}`]: action.payload}
                     draft.posts = {...newPost, ...draft.posts}
+                    draft.addingPost = false
+                    break
+                case ADD_POST_FAIL:
+                    draft.postUploadError = true
                     draft.addingPost = false
                     break
                 case ADD_COMMENT_SUCCESS:

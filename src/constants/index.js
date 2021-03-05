@@ -105,3 +105,18 @@ export const THEME_CHANGED_FAIL = 'THEME_CHANGED_FAIL'
 //URLS
 export const FETCH_URL = 'https://rateet.com'
 export const MEDIA_URL = 'https://rateappbucket.s3.amazonaws.com/media/'
+
+//ICONS
+export const tiktokIcon = require('../../assets/icons/tiktok-512.png')
+export const catIcon = require('../../assets/icons/cat-512.png')
+export const sportIcon = require('../../assets/icons/ball-512.png')
+export const moviesIcon = require('../../assets/icons/popcorn-512.png')
+export const fashionIcon = require('../../assets/icons/handbag-512.png')
+export const gamesIcon = require('../../assets/icons/gameconsole-512.png')
+export const booksIcon = require('../../assets/icons/books-512.png')
+export const artIcon = require('../../assets/icons/statue-512.png')
+export const landscapeIcon = require('../../assets/icons/mountain-512.png')
+export const carsIcon = require('../../assets/icons/car-512.png')
+export const memesIcon = require('../../assets/icons/humor-512.png')
+export const foodsIcon = require('../../assets/icons/veganfood-512.png')
+export const musicIcon = require('../../assets/icons/music-512.png')

@@ -30,7 +30,9 @@ export default {
     checkBoxText2: 'and',
 
     //HomeScreen
-    home: 'Home', 
+    home: 'Home',
+    postUploadingInfo: 'uploading', 
+    postUploadError: 'There\'s been an error. Please try again.',
 
     //HomeScreen -> RatedBy
     ratedBy: 'rated by',
@@ -60,6 +62,9 @@ export default {
     movies: 'Movies',
     cars: 'Cars',
     landscape: 'Landscape',
+    animals: 'Animals',
+    tiktok: 'TikTok',
+    music: 'Music',
     preferences: 'Preferences',
     darkTheme: 'Dark Theme',
     signOut: 'Sign Out',

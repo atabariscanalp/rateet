@@ -139,6 +139,16 @@ export const getMutedInfo = createSelector(
     posts => posts.muted
 )
 
+export const getPostUploadingInfo = createSelector(
+    [getPostsSelector],
+    posts => posts.addingPost
+)
+
+export const getPostUploadErrorInfo = createSelector(
+    [getPostsSelector],
+    posts => posts.postUploadError
+)
+
 export const getPostDetailInfo = createSelector(
     [getPostDetailSelector],
     post => post

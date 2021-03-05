@@ -31,6 +31,8 @@ export default {
 
     //HomeScreen
     home: 'Ana Sayfa',    
+    postUploadingInfo: 'yükleniyor',
+    postUploadError: 'Bir hata oluştu. Lütfen tekrar deneyiniz.',
 
     //HomeScreen -> RatedBy
     ratedBy: 'puanlayanlar',
@@ -60,6 +62,9 @@ export default {
     movies: 'Film',
     cars: 'Araba',
     landscape: 'Manzara',
+    animals: 'Hayvanlar',
+    tiktok: 'TikTok',
+    music: 'Müzik',
     preferences: 'Tercihler',
     darkTheme: 'Koyu Tema',
     signOut: 'Çıkış Yap',

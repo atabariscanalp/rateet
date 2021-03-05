@@ -1,16 +1,19 @@
 import React from 'react'
-import { StyleSheet, SafeAreaView, StatusBar, LogBox, Dimensions, ActivityIndicator, Platform } from 'react-native'
+import { StyleSheet, SafeAreaView, StatusBar, LogBox, Dimensions, ActivityIndicator, Platform, RefreshControl } from 'react-native'
 import { connect} from 'react-redux'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 
 import { getPosts, incrementPage, getMorePosts } from '../src/actions/posts'
-import { getBlockedUsersInfo, getFetchingInfo, getNextPageUrlInfo, getPageInfo, getPostsInfo } from '../src/constants/selector'
+import { getBlockedUsersInfo, getFetchingInfo, getNextPageUrlInfo, getPageInfo, getPostsInfo, getPostUploadErrorInfo, getPostUploadingInfo } from '../src/constants/selector'
 import Card from '../src/components/Card'
 import Add from '../src/components/Admob'
 import { shallowEqual } from '../src/constants/context'
 import { useTheme } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { registerDevice } from '../src/actions/user'
+import { CustomText } from '../shared/components'
+import languages from '../src/languages/Languages'
+import { responsiveScreenFontSize } from 'react-native-responsive-dimensions'
 
 
 const PAGE_SIZE = 20
@@ -22,6 +25,7 @@ export class HomeScreen extends React.Component {
         super(props)
             this.state = {
                 isRefreshing: false,
+                errorVisible: false
             }
         this.viewabilityConfig = {
             waitForInteraction: false,
@@ -49,6 +53,12 @@ export class HomeScreen extends React.Component {
         //BLOCKED_USERS
         if (!shallowEqual(this.props.blockedUsers, nextProps.blockedUsers))
             return true
+        //POST_UPLOADING
+        if (this.props.uploadingPost !== nextProps.uploadingPost)
+            return true
+        //POST_UPLOADING_ERROR
+        if (this.props.postUploadError !== nextProps.postUploadError)
+            return true
 
         return false
     }
@@ -66,6 +76,13 @@ export class HomeScreen extends React.Component {
           })
 
         this.props.getPosts(1, PAGE_SIZE)
+
+        if (this.props.postUploadError) {
+            const timer = setTimeout(() => {
+                this.setState({ errorVisible: false })
+            }, 2000)
+            return () => clearTimeout(timer)
+        }
     }
 
     refresh = () => {
@@ -166,8 +183,40 @@ export class HomeScreen extends React.Component {
         return false
     }
 
-    render(){
+    listHeaderComponent = () => {
+        const { uploadingPost, postUploadError } = this.props
+        const { errorVisible } = this.state
+
+        if (uploadingPost) {
+            this.setState({ errorVisible: true })
+            return (
+                <SafeAreaView style={styles.uploadingView}>
+                    <CustomText style={styles.uploadingInfoText}>{languages.postUploadingInfo}</CustomText>
+                </SafeAreaView>
+            )
+        }        
+        else if (postUploadError && errorVisible)
+            return (
+                <SafeAreaView style={styles.uploadingViewError}>
+                    <CustomText style={styles.uploadingInfoText}>{languages.postUploadError}</CustomText>
+                </SafeAreaView>
+            )
+        return null
+    }
+
+    refreshControl = () => {
         const { isRefreshing } = this.state
+        return (
+            <RefreshControl 
+                onRefresh={this.refresh}
+                refreshing={isRefreshing}
+                tintColor="grey"
+            />
+        )
+    }
+
+    render(){
+        
         const { colors, scrollRef } = this.props.route.params
         const { posts, navigation } = this.props
 
@@ -196,8 +245,7 @@ export class HomeScreen extends React.Component {
                         keyExtractor={this.keyExtractor}
                         showsVerticalScrollIndicator={false}
                         style={this.backgroundStyle()}
-                        onRefresh={this.refresh}
-                        refreshing={isRefreshing}
+                        refreshControl={this.refreshControl()}
                         onEndReachedThreshold={posts.length < 5 ? 2 : 5}
                         onEndReached={this.onEndReached}
                         onViewableItemsChanged={this.onViewableItemsChanged}
@@ -206,6 +254,7 @@ export class HomeScreen extends React.Component {
                         /* getItemLayout={this.getItemLayout} */
                         initialNumToRender={8}
                         enableResetScrollToCoords={false}
+                        ListHeaderComponent={this.listHeaderComponent()}
                     />
             </SafeAreaView>
         )
@@ -234,6 +283,31 @@ const styles = StyleSheet.create({
     },
     activityIndicator: {
         marginTop: '60%'
+    },
+    uploadingView: {
+        width: '100%',
+        backgroundColor: '#3b3b3b',
+        opacity: 0.7,
+        height: 55,
+        marginTop: '3%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5
+    },
+    uploadingInfoText: {
+        color: 'white',
+        fontSize: responsiveScreenFontSize(2.1),
+        fontWeight: 'bold'
+    },
+    uploadingViewError: {
+        width: '100%',
+        backgroundColor: 'red',
+        opacity: 0.9,
+        height: 55,
+        marginTop: '3%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5
     }
 })
 
@@ -243,7 +317,9 @@ const mapStateToProps = state => {
         fetching: getFetchingInfo(state),
         nextPageUrl: getNextPageUrlInfo(state),
         posts: getPostsInfo(state),
-        blockedUsers: getBlockedUsersInfo(state)
+        blockedUsers: getBlockedUsersInfo(state),
+        uploadingPost: getPostUploadingInfo(state),
+        postUploadError: getPostUploadErrorInfo(state)
     }
 }
 

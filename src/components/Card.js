@@ -23,6 +23,21 @@ import { shallowEqual } from '../constants/context'
 import { CustomText } from '../../shared/components'
 import languages from '../languages/Languages'
 import { responsiveScreenFontSize } from 'react-native-responsive-dimensions'
+import { 
+    foodsIcon,
+    gamesIcon,
+    carsIcon,
+    memesIcon,
+    landscapeIcon,
+    artIcon,
+    booksIcon,
+    fashionIcon,
+    moviesIcon,
+    sportIcon,
+    catIcon,
+    tiktokIcon,
+    musicIcon
+} from '../constants/index'
 
 export class Card extends React.Component {
 
@@ -105,16 +120,19 @@ export class Card extends React.Component {
     }
 
     setCategory = (category) => {
-        if (category === "Sport") return require('../../assets/icons/ball-512.png')
-        else if (category === "Fashion") return require('../../assets/icons/handbag-512.png')
-        else if (category === "Books") return require('../../assets/icons/books-512.png')
-        else if (category === "Movies") return require('../../assets/icons/popcorn-512.png')
-        else if (category === "Games") return require('../../assets/icons/gameconsole-512.png')
-        else if (category === "Cars") return require('../../assets/icons/f1-512.png')
-        else if (category === "Landscape") return require('../../assets/icons/mountain-512.png')
-        else if (category === "Art") return require('../../assets/icons/statue-512.png')
-        else if (category === "Memes") return require('../../assets/icons/humor-512.png')
-        else if (category === "Foods") return require('../../assets/icons/veganfood-512.png')
+        if (category === "Sport") return sportIcon
+        else if (category === "Fashion") return fashionIcon
+        else if (category === "Books") return booksIcon
+        else if (category === "Movies") return moviesIcon
+        else if (category === "Games") return gamesIcon
+        else if (category === "Cars") return carsIcon
+        else if (category === "Landscape") return landscapeIcon
+        else if (category === "Art") return artIcon
+        else if (category === "Memes") return memesIcon
+        else if (category === "Foods") return foodsIcon
+        else if (category === "TikTok") return tiktokIcon
+        else if (category === "Animals") return catIcon
+        else if (category === "Music") return musicIcon
     }
 
     onRatePost = pos => {
