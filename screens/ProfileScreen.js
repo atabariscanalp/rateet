@@ -19,6 +19,7 @@ import languages from '../src/languages/Languages'
 
 export function ProfileScreen({navigation, route, loadProfile, blockUser, unblockUser}) {
 
+
     const FocusAwareStatusBar = (props) => {
         return isFocused ? <StatusBar {...props} /> : null
     }
@@ -182,128 +183,117 @@ export function ProfileScreen({navigation, route, loadProfile, blockUser, unbloc
         setIsVisible(false)
     }
 
+    const listHeaderComponent = (
+        <SafeAreaView style={styles.header}>
+            <FocusAwareStatusBar backgroundColor="#4682B4" barStyle="dark-content"/>
+            <Ionicons name="chevron-back-outline" size={35} color="black" style={styles.backIcon} onPress={goBack} />
+            <SafeAreaView>
+                <SafeAreaView style={styles.photoAndInfo}>
+                    <SafeAreaView style={styles.profileContainer}>
+                        <Image source={getProfileImg()} style={styles.profilePhoto}/>
+                        <ReturnProfileInfo />
+                    </SafeAreaView>
+                    {authUser.username === username ? 
+                        <TouchableOpacity onPress={editProfile}>
+                            <Ionicons name="settings-outline" size={30} style={styles.settingsIcon} />
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity onPress={showModal}>
+                            <MaterialCommunityIcons name="block-helper" size={30} style={styles.settingsIcon} />
+                        </TouchableOpacity>
+                    }
+                </SafeAreaView>
+                <SafeAreaView style={styles.lineView} />
+                <SafeAreaView style={styles.profileMetaContainer}>
+                    <SafeAreaView style={styles.postCountContainer}>
+                        <CustomText style={styles.posts}>{languages.posts}</CustomText>
+                        <CustomText style={styles.postCount}>{getPostCount()}</CustomText>
+                    </SafeAreaView>
+                    <SafeAreaView style={styles.rateContainer}>
+                        <CustomText style={styles.rateText}>{languages.ratedAveragely}</CustomText>
+                        <CustomText style={styles.avgRate}>{getAvgRate()}</CustomText>
+                        <Rating 
+                            type="custom"
+                            selectedIconImage={starFilledBlack}
+                            emptyIconImage={starEmptyBlack}
+                            readonly={true}
+                            rated={getAvgRate()}
+                            size={20}
+                            marginBetweenRatingIcon={0.1}
+                        />
+                    </SafeAreaView>
+                </SafeAreaView>
+            </SafeAreaView>
+            <SafeAreaView style={styles.profileMetaShadow} />
+            <Modal
+                isVisible={isVisible}
+                coverScreen={true}
+                onBackButtonPress={hideModal}
+                onBackdropPress={hideModal}
+                style={styles.modal}
+                animationIn="slideInUp"
+                animationOut="slideOutDown"
+                backdropOpacity={0.3}
+                swipeDirection="down"
+                onSwipeComplete={hideModal}
+                useNativeDriver={true}
+            >
+                {!isUserBlocked ? 
+                    <SafeAreaView style={styles.modalContainer}>
+                        <CustomText style={styles.blockQuestion}>{languages.blockUserTitle}</CustomText>
+                        <Button
+                            mode="contained"
+                            color="#DC143C" 
+                            labelStyle={styles.blockText}
+                            contentStyle={styles.blockButtonContent}
+                            style={styles.blockButton} 
+                            onPress={block}
+                        >
+                            {languages.blockUserButton}
+                        </Button>
+                        <Button
+                            mode="contained"
+                            color="#808080" 
+                            labelStyle={styles.cancelText}
+                            contentStyle={styles.cancelButtonContent}
+                            style={styles.cancelButton}  
+                            onPress={hideModal}
+                        >
+                            {languages.blockUserCancel}
+                        </Button>
+                    </SafeAreaView>
+                    :
+                    <SafeAreaView style={styles.modalContainer}>
+                        <CustomText style={styles.blockQuestion}>{languages.unblockUserTitle}</CustomText>
+                        <Button
+                            mode="contained"
+                            color="#9ACD32" 
+                            labelStyle={styles.blockText}
+                            contentStyle={styles.blockButtonContent}
+                            style={styles.blockButton} 
+                            onPress={unblock}
+                        >
+                            {languages.unblockUserButton}
+                        </Button>
+                        <Button
+                            mode="contained"
+                            color="#808080" 
+                            labelStyle={styles.cancelText}
+                            contentStyle={styles.cancelButtonContent}
+                            style={styles.cancelButton}  
+                            onPress={hideModal}
+                        >
+                            {languages.blockUserCancel}
+                        </Button>
+                    </SafeAreaView>
+                }
+            </Modal>
+        </SafeAreaView>
+    )
+
     return (
         <KeyboardAwareFlatList
-            ListHeaderComponent={
-                <SafeAreaView style={styles.header}>
-                    <FocusAwareStatusBar backgroundColor="#4682B4" barStyle="dark-content"/>
-                    <Ionicons name="chevron-back-outline" size={35} color="black" style={styles.backIcon} onPress={goBack} />
-                    <SafeAreaView>
-                        <SafeAreaView style={styles.photoAndInfo}>
-                            <SafeAreaView style={styles.profileContainer}>
-                                <Image source={getProfileImg()} style={styles.profilePhoto}/>
-                                <ReturnProfileInfo />
-                            </SafeAreaView>
-                            {authUser.username === username ? 
-                                <TouchableOpacity onPress={editProfile}>
-                                    <Ionicons name="settings-outline" size={30} style={styles.settingsIcon} />
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity onPress={showModal}>
-                                    <MaterialCommunityIcons name="block-helper" size={30} style={styles.settingsIcon} />
-                                </TouchableOpacity>
-                            }
-                        </SafeAreaView>
-                        <SafeAreaView style={styles.lineView} />
-                        <SafeAreaView style={styles.profileMetaContainer}>
-                            <SafeAreaView style={styles.postCountContainer}>
-                                <CustomText style={styles.posts}>{languages.posts}</CustomText>
-                                <CustomText style={styles.postCount}>{getPostCount()}</CustomText>
-                            </SafeAreaView>
-                            <SafeAreaView style={styles.rateContainer}>
-                                <CustomText style={styles.rateText}>{languages.ratedAveragely}</CustomText>
-                                <CustomText style={styles.avgRate}>{getAvgRate()}</CustomText>
-                                <Rating 
-                                    type="custom"
-                                    selectedIconImage={starFilledBlack}
-                                    emptyIconImage={starEmptyBlack}
-                                    readonly={true}
-                                    rated={getAvgRate()}
-                                    size={20}
-                                    marginBetweenRatingIcon={0.1}
-                                />
-                            </SafeAreaView>
-                        </SafeAreaView>
-                        {/* <SafeAreaView style={styles.about}>
-                            <Text style={{fontWeight: 'bold', fontSize: responsiveScreenFontSize(2.5), marginLeft: '3%', fontFamily: 'Open Sans'}}>About</Text>
-                            <Text style={{marginLeft: '3%'}}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus turpis.
-                                In pretium quis leo nec mollis. Vivamus imperdiet est vitae nulla vestibulum,
-                                eget laoreet augue rutrum. Maecenas non.
-                            </Text>
-                        </SafeAreaView> */}
-                    </SafeAreaView>
-                    <SafeAreaView style={styles.profileMetaShadow} />
-                    {/* <SafeAreaView style={{backgroundColor: colors.statusBarSearch, paddingTop: '5%', paddingLeft: '3%'}}>
-                        <Text style={{fontWeight: 'bold',
-                        color: 'grey',
-                        fontSize: responsiveScreenFontSize(2.2)}}>Posts</Text>
-                    </SafeAreaView> */}
-                    <Modal
-                        isVisible={isVisible}
-                        coverScreen={true}
-                        onBackButtonPress={hideModal}
-                        onBackdropPress={hideModal}
-                        style={styles.modal}
-                        animationIn="slideInUp"
-                        animationOut="slideOutDown"
-                        backdropOpacity={0.3}
-                        swipeDirection="down"
-                        onSwipeComplete={hideModal}
-                        useNativeDriver={true}
-                    >
-                        {!isUserBlocked ? 
-                            <SafeAreaView style={styles.modalContainer}>
-                                <CustomText style={styles.blockQuestion}>{languages.blockUserTitle}</CustomText>
-                                <Button
-                                    mode="contained"
-                                    color="#DC143C" 
-                                    labelStyle={styles.blockText}
-                                    contentStyle={styles.blockButtonContent}
-                                    style={styles.blockButton} 
-                                    onPress={block}
-                                >
-                                    {languages.blockUserButton}
-                                </Button>
-                                <Button
-                                    mode="contained"
-                                    color="#808080" 
-                                    labelStyle={styles.cancelText}
-                                    contentStyle={styles.cancelButtonContent}
-                                    style={styles.cancelButton}  
-                                    onPress={hideModal}
-                                >
-                                    {languages.blockUserCancel}
-                                </Button>
-                            </SafeAreaView>
-                            :
-                            <SafeAreaView style={styles.modalContainer}>
-                                <CustomText style={styles.blockQuestion}>{languages.unblockUserTitle}</CustomText>
-                                <Button
-                                    mode="contained"
-                                    color="#9ACD32" 
-                                    labelStyle={styles.blockText}
-                                    contentStyle={styles.blockButtonContent}
-                                    style={styles.blockButton} 
-                                    onPress={unblock}
-                                >
-                                    {languages.unblockUserButton}
-                                </Button>
-                                <Button
-                                    mode="contained"
-                                    color="#808080" 
-                                    labelStyle={styles.cancelText}
-                                    contentStyle={styles.cancelButtonContent}
-                                    style={styles.cancelButton}  
-                                    onPress={hideModal}
-                                >
-                                    {languages.blockUserCancel}
-                                </Button>
-                            </SafeAreaView>
-                        }
-                    </Modal>
-                </SafeAreaView>
-            }
+            ListHeaderComponent={listHeaderComponent}
             showsVerticalScrollIndicator={false}
             data={getData()}
             renderItem={renderItem}

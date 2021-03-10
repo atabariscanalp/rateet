@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     inlineInputStyle: {
         height: 38,
         width: '65%', 
-        marginLeft: '6%'
+        marginLeft: '9%'
     }
 })
 

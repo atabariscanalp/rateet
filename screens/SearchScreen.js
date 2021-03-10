@@ -26,17 +26,12 @@ import {
     musicIcon
 } from '../src/constants/index'
 
-export default function SearchScreen({navigation, route}) {
+export default function SearchScreen({ navigation }) {
 
     const FocusAwareStatusBar = (props) => {
         const isFocused = useIsFocused()
         return isFocused ? <StatusBar {...props} /> : null
     }
-
-    if (route.params)
-        console.log("params: ", route.params)
-    else 
-        console.log("no params!!")
 
     //THEME
     const { colors } = useTheme()
